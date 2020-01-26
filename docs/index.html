@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pan Docs</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.78f28ec0.css" as="style"><link rel="preload" href="/assets/js/app.e9f16c37.js" as="script"><link rel="preload" href="/assets/js/2.6b17e999.js" as="script"><link rel="preload" href="/assets/js/5.87285620.js" as="script"><link rel="prefetch" href="/assets/js/3.653ef183.js"><link rel="prefetch" href="/assets/js/4.554dccb8.js"><link rel="prefetch" href="/assets/js/6.c6c8154c.js"><link rel="prefetch" href="/assets/js/7.8afda27a.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.78f28ec0.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="pan-docs"><a href="#pan-docs" class="header-anchor">#</a> Pan Docs</h1> <h4 id="table-of-contents"><a href="#table-of-contents" class="header-anchor">#</a> Table of Contents</h4> <p>Overview</p> <ul><li><a href="#about-the-pan-docs">About the Pan Docs</a></li> <li><a href="#specifications">Specifications</a></li> <li><a href="#memory-map">Memory Map</a></li></ul> <p>I/O Ports</p> <ul><li><a href="#video-display">Video Display</a></li> <li>Sound Controller</li> <li>Joypad Input</li> <li>Serial Data Transfer (Link Cable)</li> <li>Timer and Divider Registers</li> <li>Interrupts</li> <li>CGB Registers</li> <li>SGB Functions</li></ul> <p>CPU Specifications</p> <ul><li>Registers and Flags</li> <li>Instruction Set</li> <li>Comparision with Z80</li></ul> <p>Cartridges</p> <ul><li>Cartridge header</li> <li>MBC1</li> <li>MBC2</li> <li>MBC3</li> <li>MBC5</li> <li>MBC6</li> <li>MBC7</li> <li>HuC1</li></ul> <p>Accessories</p> <ul><li>Gameboy Printer</li> <li>Gameboy Camera</li> <li>Gamegenie/Shark Cheats</li></ul> <p>Other</p> <ul><li>Power Up Sequence</li> <li>Reducing Power Consumption</li> <li>Sprite RAM Bug</li> <li>External Connectors</li></ul> <hr> <h1 id="about-the-pan-docs"><a href="#about-the-pan-docs" class="header-anchor">#</a> About the Pan Docs</h1> <div class="language- extra-class"><pre class="language-text"><code> =================================================================
+       Everything You Always Wanted To Know About GAMEBOY *
+ =================================================================
+
+                     * but were afraid to ask
+</code></pre></div><p>This is a new, experimental version of Pan Docs, mantained in the Markdown format.</p> <p>To learn more about the History and the current mission of the project, check the <a href="https://github.com/gbdev/pandocs#history" target="_blank" rel="noopener noreferrer">README<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <h1 id="specifications"><a href="#specifications" class="header-anchor">#</a> Specifications</h1> <ul><li>CPU - 8-bit Sharp LR25902 (similar to the Z80 processor)</li> <li>Clock Speed - 4.194304MHz (4.295454MHz for SGB, max. 8.4MHz for CGB)</li> <li>Work RAM - 8K Byte (32K Byte for CGB)</li> <li>Video RAM - 8K Byte (16K Byte for CGB)</li> <li>Screen Size - 2.6&quot;</li> <li>Resolution - 160x144 (20x18 tiles)</li> <li>Max sprites - Max 40 per screen, 10 per line</li> <li>Sprite sizes - 8x8 or 8x16 pixels</li> <li>Palettes - 1x4 BG, 2x3 OBJ (for CGB: 8x4 BG, 8x3 OBJ)</li> <li>Colors - 4 grayshades (32768 colors for CGB)</li> <li>Horiz Sync - 9198 KHz (9420 KHz for SGB)</li> <li>Vert Sync - 59.73 Hz (61.17 Hz for SGB)</li> <li>Sound - 4 channels with stereo sound</li> <li>Power - DC6V 0.7W (DC3V 0.7W for GB Pocket, DC3V 0.6W for CGB)</li></ul> <h1 id="memory-map"><a href="#memory-map" class="header-anchor">#</a> Memory Map</h1> <p>The gameboy has a 16bit address bus, that is used to address ROM, RAM and I/O</p> <h2 id="general-memory-map"><a href="#general-memory-map" class="header-anchor">#</a> General Memory Map</h2> <table><thead><tr><th><strong>Start</strong></th> <th><strong>End</strong></th> <th><strong>Description</strong></th> <th><strong>Notes</strong></th></tr></thead> <tbody><tr><td>0000</td> <td>3FFF</td> <td>16KB ROM bank 00</td> <td>From cartridge, usually a fixed bank</td></tr> <tr><td>4000</td> <td>7FFF</td> <td>16KB ROM Bank 01~NN</td> <td>From cartridge, switchable bank via <a href="Memory_Bank_Controllers" title="wikilink">MB</a> (if any)</td></tr> <tr><td>8000</td> <td>9FFF</td> <td>8KB Video RAM (VRAM)</td> <td>Only bank 0 in Non-CGB mode Switchable bank 0/1 in CGB mode</td></tr> <tr><td>A000</td> <td>BFFF</td> <td>8KB External RAM</td> <td>In cartridge, switchable bank if any</td></tr> <tr><td>C000</td> <td>CFFF</td> <td>4KB Work RAM (WRAM) bank 0</td> <td></td></tr> <tr><td>D000</td> <td>DFFF</td> <td>4KB Work RAM (WRAM) bank 1~N</td> <td>Only bank 1 in Non-CGB mode Switchable bank 1~7 in CGB mode</td></tr> <tr><td>E000</td> <td>FDFF</td> <td>Mirror of C000~DDFF (ECHO RAM)</td> <td>Typically not used</td></tr> <tr><td>FE00</td> <td>FE9F</td> <td>Sprite attribute table (<a href="Video_Display#VRAM_Sprite_Attribute_Table_.28OAM.29" title="wikilink">OAM</a>)</td> <td></td></tr> <tr><td>FEA0</td> <td>FEFF</td> <td>Not Usable</td> <td></td></tr> <tr><td>FF00</td> <td>FF7F</td> <td>I/O Registers</td> <td></td></tr> <tr><td>FF80</td> <td>FFFE</td> <td>High RAM (HRAM)</td> <td></td></tr> <tr><td>FFFF</td> <td>FFFF</td> <td><a href="Interrupts" title="wikilink">Interrupts</a> Enable Register (IE)</td> <td></td></tr></tbody></table> <h2 id="jump-vectors-in-first-rom-bank"><a href="#jump-vectors-in-first-rom-bank" class="header-anchor">#</a> Jump Vectors in first ROM bank</h2> <p>The following addresses are supposed to be used as jump vectors:</p> <ul><li>RST commands: 0000,0008,0010,0018,0020,0028,0030,0038</li> <li>Interrupts: 0040,0048,0050,0058,0060</li></ul> <p>However, the memory may be used for any other purpose in case that your
+program doesn't use any (or only some) RST commands or interrupts. RST
+commands are 1-byte opcodes that work similar to CALL opcodes, except
+that the destination address is fixed. Since they are only 1 byte large,
+they are also slightly faster.</p> <h2 id="cartridge-header-in-first-rom-bank"><a href="#cartridge-header-in-first-rom-bank" class="header-anchor">#</a> Cartridge Header in first ROM bank</h2> <p>The memory at 0100-014F contains the <a href="The_Cartridge_Header" title="wikilink">cartridge
+header</a>. This area contains information
+about the program, its entry point, checksums, information about the
+used MBC chip, the ROM and RAM sizes, etc. Most of the bytes in this
+area are required to be specified correctly. For more information read
+the chapter about The Cartridge Header.</p> <h2 id="external-memory-and-hardware"><a href="#external-memory-and-hardware" class="header-anchor">#</a> External Memory and Hardware</h2> <p>The areas from 0000-7FFF and A000-BFFF may be used to connect external
+hardware. The first area is typically used to address ROM (read only, of
+course), cartridges with <a href="Memory_Bank_Controllers" title="wikilink">Memory Bank Controllers
+(MBCs)</a> are additionally using this
+area to output data (write only) to the MBC chip. The second area is
+often used to address external RAM, or to address other external
+hardware (<a href="RTC" title="wikilink">Real Time Clock</a>, etc). External memory is
+often battery buffered, and may hold saved game positions and high score
+tables (etc.) even when the Game Boy is turned off, or when the
+cartridge is removed. For specific information read the chapter about
+Memory Bank Controllers.</p> <h2 id="echo-ram"><a href="#echo-ram" class="header-anchor">#</a> Echo RAM</h2> <p>The memory range E000-FDFF is a mirror (or &quot;echo&quot;) of WRAM, both for
+reading and writing. For example, writing to $E123 will modify both
+$C123 and $E123. It is recommended to avoid using this memory range
+anyways. This memory range's behavior has been confirmed on all grey
+GBs as well as on CGB and GBA. Some emulators (such as VisualBoyAdvance
+&lt;1.8) don't emulate Echo RAM. It is possible to check if Echo RAM is
+properly emulated by writing to WRAM (avoid values 00 and FF) and
+checking if said value is mirrored in Echo RAM.</p> <h2 id="fea0-feff-range"><a href="#fea0-feff-range" class="header-anchor">#</a> FEA0-FEFF range</h2> <p>This range is very poorly documented. It doesn't even have a name !
+From my experience, this stays 00 on DMG, and alternates between 00 and
+seemingly random values on CGB.</p> <h1 id="video-display"><a href="#video-display" class="header-anchor">#</a> Video Display</h1> <h2 id="lcd-control-register"><a href="#lcd-control-register" class="header-anchor">#</a> LCD Control Register</h2> <p>Detailed article: <a href="LCDC" title="wikilink">LCDC</a></p> <div class="language- extra-class"><pre class="language-text"><code>Bit 7 - LCD Display Enable             (0=Off, 1=On)
+Bit 6 - Window Tile Map Display Select (0=9800-9BFF, 1=9C00-9FFF)
+Bit 5 - Window Display Enable          (0=Off, 1=On)
+Bit 4 - BG &amp; Window Tile Data Select   (0=8800-97FF, 1=8000-8FFF)
+Bit 3 - BG Tile Map Display Select     (0=9800-9BFF, 1=9C00-9FFF)
+Bit 2 - OBJ (Sprite) Size              (0=8x8, 1=8x16)
+Bit 1 - OBJ (Sprite) Display Enable    (0=Off, 1=On)
+Bit 0 - BG/Window Display/Priority     (0=Off, 1=On)
+</code></pre></div><h2 id="lcd-status-register"><a href="#lcd-status-register" class="header-anchor">#</a> LCD Status Register</h2> <h4 id="ff41-stat-lcdc-status-r-w"><a href="#ff41-stat-lcdc-status-r-w" class="header-anchor">#</a> FF41 - STAT - LCDC Status (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 6 - LYC=LY Coincidence Interrupt (1=Enable) (Read/Write)
+Bit 5 - Mode 2 OAM Interrupt         (1=Enable) (Read/Write)
+Bit 4 - Mode 1 V-Blank Interrupt     (1=Enable) (Read/Write)
+Bit 3 - Mode 0 H-Blank Interrupt     (1=Enable) (Read/Write)
+Bit 2 - Coincidence Flag  (0:LYC&lt;&gt;LY, 1:LYC=LY) (Read Only)
+Bit 1-0 - Mode Flag       (Mode 0-3, see below) (Read Only)
+          0: During H-Blank
+          1: During V-Blank
+          2: During Searching OAM
+          3: During Transferring Data to LCD Driver
+</code></pre></div><p>The two lower STAT bits show the current status of the LCD controller.</p> <p>The LCD controller operates on a 2^22^ Hz = 4.194 MHz dot clock. An
+entire frame is 154 scanlines, 70224 dots, or 16.74 ms. On scanlines 0
+through 143, the LCD controller cycles through modes 2, 3, and 0 once
+every 456 dots. Scanlines 144 through 153 are mode 1.</p> <p>The following are typical when the display is enabled:</p> <div class="language- extra-class"><pre class="language-text"><code>Mode 2  2_____2_____2_____2_____2_____2___________________2____
+Mode 3  _33____33____33____33____33____33__________________3___
+Mode 0  ___000___000___000___000___000___000________________000
+Mode 1  ____________________________________11111111111111_____
+</code></pre></div><p>When the LCD controller is reading a particular part of video memory,
+that memory is inaccessible to the CPU.</p> <ul><li>During modes 2 and 3, the CPU cannot access OAM (FE00h-FE9Fh).</li> <li>During mode 3, the CPU cannot access VRAM or CGB Palette Data
+(FF69,FF6B).</li></ul> <table><thead><tr><th>Mode</th> <th>Action</th> <th>Duration</th> <th>Accessible video memory</th></tr></thead> <tbody><tr><td>2</td> <td>Scanning OAM for (X, Y) coordinates of sprites that overlap this line</td> <td>80 dots (19 us)</td> <td>VRAM, CGB palettes</td></tr> <tr><td>3</td> <td>Reading OAM and VRAM to generate the picture</td> <td>168 to 291 cycles (40 to 60 us) depending on sprite count</td> <td>None</td></tr> <tr><td>0</td> <td>Horizontal blanking</td> <td>85 to 208 dots (20 to 49 us) depending on previous mode 3 duration</td> <td>VRAM, OAM, CGB palettes</td></tr> <tr><td>1</td> <td>Vertical blanking</td> <td>4560 dots (1087 us, 10 scanlines)</td> <td>VRAM, OAM, CGB palettes</td></tr></tbody></table> <p>: Properties of STAT modes</p> <p>Unlike most game consoles, the Game Boy can pause the dot clock briefly,
+adding dots to mode 3's duration. It routinely takes a 6 to 11 dot
+break to fetch sprite patterns between background tile pattern fetches.
+On DMG and GBC in DMG mode, mid-scanline writes to <code>BGP</code> allow observing
+this behavior, as a sprite delay shifts the effect of a write to the
+left by that many dots.</p> <p>Three things are known to pause the dot clock:</p> <p>Background scrolling
+:   If <code>SCX mod 8</code> is not zero at the start of the scanline, rendering
+is paused for that many dots while the shifter discards that many
+pixels from the leftmost tile.</p> <p>Window
+:   An active window pauses for at least 6 dots, as the background
+fetching mechanism starts over at the left side of the window.</p> <p>Sprites
+:   Each sprite usually pauses for <code>11 - min(5, (x + SCX) mod 8)</code> dots.
+Because sprite fetch waits for background fetch to finish, a
+sprite's cost depends on its position relative to the left side of
+the background tile under it. It's greater if a sprite is directly
+aligned over the background tile, less if the sprite is to the
+right. If the sprite's left side is over the window, use <code>255 - WX</code>
+for <code>SCX</code> in this formula.</p> <p><strong>Not fully understood:</strong> The exact pause duration for window start is
+not confirmed; it may have the same background fetch finish delay as a
+sprite. If two sprites' left sides are over the same background or
+window tile, the second may pause for fewer dots.</p> <p>A hardware quirk in the monochrome Game Boy makes the LCD interrupt
+sometimes trigger when writing to STAT (including writing $00) during
+OAM scan, H-Blank, V-Blank, or LY=LYC. It behaves as if $FF were
+written for one cycle, and then the written value were written the next
+cycle. Because the GBC in DMG mode does not have this quirk, two games
+that depend on this quirk (Ocean's <em>Road Rash</em> and Vic Tokai's <em>Xerd
+no Densetsu</em>) will not run on a GBC.</p> <h2 id="lcd-interrupts"><a href="#lcd-interrupts" class="header-anchor">#</a> LCD Interrupts</h2> <h4 id="int-40-v-blank-interrupt"><a href="#int-40-v-blank-interrupt" class="header-anchor">#</a> INT 40 - V-Blank Interrupt</h4> <p>The V-Blank interrupt occurs ca. 59.7 times a second on a handheld Game
+Boy (DMG or CGB) or Game Boy Player and ca. 61.1 times a second on a
+Super Game Boy (SGB). This interrupt occurs at the beginning of the
+V-Blank period (LY=144). During this period video hardware is not using
+VRAM so it may be freely accessed. This period lasts approximately 1.1
+milliseconds.</p> <h4 id="int-48-lcdc-status-interrupt"><a href="#int-48-lcdc-status-interrupt" class="header-anchor">#</a> INT 48 - LCDC Status Interrupt</h4> <p>There are various reasons for this interrupt to occur as described by
+the STAT register ($FF40). One very popular reason is to indicate to
+the user when the video hardware is about to redraw a given LCD line.
+This can be useful for dynamically controlling the SCX/SCY registers
+($FF43/$FF42) to perform special video effects.</p> <p>Example application : set LYC to WY, enable LY=LYC interrupt, and have
+the handler disable sprites. This can be used if you use the window for
+a text box (at the bottom of the screen), and you want sprites to be
+hidden by the text box.</p> <p>The interrupt is triggered when transitioning from &quot;No conditions met&quot;
+to &quot;Any condition met&quot;, which can cause the interrupt to not fire.
+Example : the Mode 0 and LY=LYC interrupts are enabled ; since the
+latter triggers during Mode 2 (right after Mode 0), the interrupt will
+trigger for Mode 0 but fail to for LY=LYC.</p> <h2 id="lcd-position-and-scrolling"><a href="#lcd-position-and-scrolling" class="header-anchor">#</a> LCD Position and Scrolling</h2> <p>These registers can be accessed even during Mode 3, but they have no
+effect until the end of the current scanline.</p> <h4 id="ff42-scy-scroll-y-r-w-ff43-scx-scroll-x-r-w"><a href="#ff42-scy-scroll-y-r-w-ff43-scx-scroll-x-r-w" class="header-anchor">#</a> FF42 - SCY - Scroll Y (R/W), FF43 - SCX - Scroll X (R/W)</h4> <p>Specifies the position in the 256x256 pixels BG map (32x32 tiles) which
+is to be displayed at the upper/left LCD display position. Values in
+range from 0-255 may be used for X/Y each, the video controller
+automatically wraps back to the upper (left) position in BG map when
+drawing exceeds the lower (right) border of the BG map area.</p> <h4 id="ff44-ly-lcdc-y-coordinate-r"><a href="#ff44-ly-lcdc-y-coordinate-r" class="header-anchor">#</a> FF44 - LY - LCDC Y-Coordinate (R)</h4> <p>The LY indicates the vertical line to which the present data is
+transferred to the LCD Driver. The LY can take on any value between 0
+through 153. The values between 144 and 153 indicate the V-Blank period.</p> <h4 id="ff45-lyc-ly-compare-r-w"><a href="#ff45-lyc-ly-compare-r-w" class="header-anchor">#</a> FF45 - LYC - LY Compare (R/W)</h4> <p>The Gameboy permanently compares the value of the LYC and LY registers.
+When both values are identical, the coincident bit in the STAT register
+becomes set, and (if enabled) a STAT interrupt is requested.</p> <h4 id="ff4a-wy-window-y-position-r-w-ff4b-wx-window-x-position-minus-7-r-w"><a href="#ff4a-wy-window-y-position-r-w-ff4b-wx-window-x-position-minus-7-r-w" class="header-anchor">#</a> FF4A - WY - Window Y Position (R/W), FF4B - WX - Window X Position minus 7 (R/W)</h4> <p>Specifies the upper/left positions of the Window area. (The window is an
+alternate background area which can be displayed above of the normal
+background. OBJs (sprites) may be still displayed above or behind the
+window, just as for normal BG.)</p> <p>The window becomes visible (if enabled) when positions are set in range
+WX=0..166, WY=0..143. A position of WX=7, WY=0 locates the window at
+upper left, it is then completely covering normal background.</p> <p>WX values 0-6 and 166 are unreliable due to hardware bugs. If WX is set
+to 0, the window will &quot;stutter&quot; horizontally when SCX changes.
+(Depending on SCX modulo 8, behavior is a little complicated so you
+should try it yourself.)</p> <h2 id="lcd-monochrome-palettes"><a href="#lcd-monochrome-palettes" class="header-anchor">#</a> LCD Monochrome Palettes</h2> <h4 id="ff47-bgp-bg-palette-data-r-w-non-cgb-mode-only"><a href="#ff47-bgp-bg-palette-data-r-w-non-cgb-mode-only" class="header-anchor">#</a> FF47 - BGP - BG Palette Data (R/W) - Non CGB Mode Only</h4> <p>This register assigns gray shades to the color numbers of the BG and
+Window tiles.</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 7-6 - Shade for Color Number 3
+Bit 5-4 - Shade for Color Number 2
+Bit 3-2 - Shade for Color Number 1
+Bit 1-0 - Shade for Color Number 0
+</code></pre></div><p>The four possible gray shades are:</p> <div class="language- extra-class"><pre class="language-text"><code>0  White
+1  Light gray
+2  Dark gray
+3  Black
+</code></pre></div><p>In CGB Mode the Color Palettes are taken from CGB Palette Memory
+instead.</p> <h4 id="ff48-obp0-object-palette-0-data-r-w-non-cgb-mode-only"><a href="#ff48-obp0-object-palette-0-data-r-w-non-cgb-mode-only" class="header-anchor">#</a> FF48 - OBP0 - Object Palette 0 Data (R/W) - Non CGB Mode Only</h4> <p>This register assigns gray shades for sprite palette 0. It works exactly
+as BGP (FF47), except that the lower two bits aren't used because
+sprite data 00 is transparent.</p> <h4 id="ff49-obp1-object-palette-1-data-r-w-non-cgb-mode-only"><a href="#ff49-obp1-object-palette-1-data-r-w-non-cgb-mode-only" class="header-anchor">#</a> FF49 - OBP1 - Object Palette 1 Data (R/W) - Non CGB Mode Only</h4> <p>This register assigns gray shades for sprite palette 1. It works exactly
+as BGP (FF47), except that the lower two bits aren't used because
+sprite data 00 is transparent.</p> <h2 id="lcd-color-palettes-cgb-only"><a href="#lcd-color-palettes-cgb-only" class="header-anchor">#</a> LCD Color Palettes (CGB only)</h2> <h4 id="ff68-bcps-bgpi-cgb-mode-only-background-palette-index"><a href="#ff68-bcps-bgpi-cgb-mode-only-background-palette-index" class="header-anchor">#</a> FF68 - BCPS/BGPI - CGB Mode Only - Background Palette Index</h4> <p>This register is used to address a byte in the CGBs Background Palette
+Memory. Each two byte in that memory define a color value. The first 8
+bytes define Color 0-3 of Palette 0 (BGP0), and so on for BGP1-7.</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 0-5   Index (00-3F)
+Bit 7     Auto Increment  (0=Disabled, 1=Increment after Writing)
+</code></pre></div><p>Data can be read/written to/from the specified index address through
+Register FF69. When the Auto Increment bit is set then the index is
+automatically incremented after each <strong>write</strong> to FF69. Auto Increment has
+no effect when <strong>reading</strong> from FF69, so the index must be manually
+incremented in that case. Writing to FF69 during rendering still causes
+auto-increment to occur.</p> <p>Unlike the following, this register can be accessed outside V-Blank and
+H-Blank.</p> <h4 id="ff69-bcpd-bgpd-cgb-mode-only-background-palette-data"><a href="#ff69-bcpd-bgpd-cgb-mode-only-background-palette-data" class="header-anchor">#</a> FF69 - BCPD/BGPD - CGB Mode Only - Background Palette Data</h4> <p>This register allows to read/write data to the CGBs Background Palette
+Memory, addressed through Register FF68. Each color is defined by two
+bytes (Bit 0-7 in first byte).</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 0-4   Red Intensity   (00-1F)
+Bit 5-9   Green Intensity (00-1F)
+Bit 10-14 Blue Intensity  (00-1F)
+</code></pre></div><p>Much like VRAM, data in Palette Memory cannot be read/written during the
+time when the LCD Controller is reading from it. (That is when the STAT
+register indicates Mode 3). Note: All background colors are initialized
+as white by the boot ROM, but it's a good idea to initialize at least
+one color yourself (for example if you include a soft-reset mechanic).</p> <h4 id="ff6a-ocps-obpi-cgb-mode-only-sprite-palette-index-ff6b-ocpd-obpd-cgb-mode-only-sprite-palette-data"><a href="#ff6a-ocps-obpi-cgb-mode-only-sprite-palette-index-ff6b-ocpd-obpd-cgb-mode-only-sprite-palette-data" class="header-anchor">#</a> FF6A - OCPS/OBPI - CGB Mode Only - Sprite Palette Index, FF6B - OCPD/OBPD - CGB Mode Only - Sprite Palette Data</h4> <p>These registers are used to initialize the Sprite Palettes OBP0-7,
+identically as described above for Background Palettes. Note that four
+colors may be defined for each OBP Palettes - but only Color 1-3 of each
+Sprite Palette can be displayed, Color 0 is always transparent, and can
+be initialized to a don't care value or plain never initialized.</p> <p>Note: All sprite colors are left uninitialized by the boot ROM, and are
+somewhat random.</p> <h4 id="rgb-translation-by-cgbs"><a href="#rgb-translation-by-cgbs" class="header-anchor">#</a> RGB Translation by CGBs</h4> <p><img src="VGA_versus_CGB.png" alt="sRGB versus CGB colormixing" title="fig:sRGB versus CGB color mixing">{width=&quot;150&quot;}
+When developing graphics on PCs, note that the RGB values will have
+different appearance on CGB displays as on VGA/HDMI monitors calibrated
+to sRGB color. Because the GBC is not lit, the highest intensity will
+produce Light Gray color rather than White. The intensities are not
+linear; the values 10h-1Fh will all appear very bright, while medium and
+darker colors are ranged at 00h-0Fh.</p> <p>The CGB display's pigments aren't perfectly saturated. This means the
+colors mix quite oddly; increasing intensity of only one R,G,B color
+will also influence the other two R,G,B colors. For example, a color
+setting of 03EFh (Blue=0, Green=1Fh, Red=0Fh) will appear as Neon Green
+on VGA displays, but on the CGB it'll produce a decently washed out
+Yellow. See image on the right.</p> <h4 id="rgb-translation-by-gbas"><a href="#rgb-translation-by-gbas" class="header-anchor">#</a> RGB Translation by GBAs</h4> <p>Even though GBA is described to be compatible to CGB games, most CGB
+games are completely unplayable on older GBAs because most colors are
+invisible (black). Of course, colors such like Black and White will
+appear the same on both CGB and GBA, but medium intensities are arranged
+completely different. Intensities in range 00h..07h are invisible/black
+(unless eventually under best sunlight circumstances, and when gazing at
+the screen under obscure viewing angles), unfortunately, these
+intensities are regularly used by most existing CGB games for medium and
+darker colors.</p> <p>Newer CGB games may avoid this effect by changing palette data when
+detecting GBA hardware (<a href="CGB_Registers#Detecting_CGB_.28and_GBA.29_functions" title="wikilink">see
+how</a>).
+Based on measurement of GBC and GBA palettes using the &quot;144p Test
+Suite&quot; ROM, a fairly close approximation is GBA = GBC * 3/4 + 8h for
+each R,G,B intensity. The result isn't quite perfect, and it may turn
+out that the color mixing is different also; anyways, it'd be still
+ways better than no conversion. Asides, this translation method should
+have been VERY easy to implement in GBA hardware directly, even though
+Nintendo obviously failed to do so. How did they say, &quot;This seal is
+your assurance for excellence in workmanship&quot; and so on?</p> <p>This problem with low brightness levels does not affect later GBA SP
+units and Game Boy Player. Thus ideally, the player should have control
+of this brightness correction.</p> <h2 id="lcd-oam-dma-transfers"><a href="#lcd-oam-dma-transfers" class="header-anchor">#</a> LCD OAM DMA Transfers</h2> <h4 id="ff46-dma-dma-transfer-and-start-address-r-w"><a href="#ff46-dma-dma-transfer-and-start-address-r-w" class="header-anchor">#</a> FF46 - DMA - DMA Transfer and Start Address (R/W)</h4> <p>Writing to this register launches a DMA transfer from ROM or RAM to OAM
+memory (sprite attribute table). The written value specifies the
+transfer source address divided by 100h, ie. source &amp; destination are:</p> <div class="language- extra-class"><pre class="language-text"><code>Source:      XX00-XX9F   ;XX in range from 00-F1h
+Destination: FE00-FE9F
+</code></pre></div><p>The transfer takes 160 machine cycles: 152 microseconds in normal speed
+or 76 microseconds in CGB Double Speed Mode. On DMG, during this time,
+the CPU can access only HRAM (memory at FF80-FFFE); on CGB, the bus used
+by the source area cannot be used (this isn't understood well at the
+moment, it's recommended to assume same behavior as DMG). For this
+reason, the programmer must copy a short procedure into HRAM, and use
+this procedure to start the transfer from inside HRAM, and wait until
+the transfer has finished:</p> <div class="language- extra-class"><pre class="language-text"><code> run_dma:
+  ld a, start address / 100h
+  ldh  (FF46h),a ;start DMA transfer (starts right after instruction)
+  ld  a,28h      ;delay...
+ wait:           ;total 4x40 cycles, approx 160 μs
+  dec a          ;1 cycle
+  jr  nz,wait    ;3 cycles
+  ret
+</code></pre></div><p>Because sprites are not displayed while OAM DMA is in progress, most
+programs are executing this procedure from inside of their VBlank
+procedure. But it is also possible to execute it during display redraw
+also, allowing to display more than 40 sprites on the screen (ie. for
+example 40 sprites in upper half, and other 40 sprites in lower half of
+the screen), at the cost of a couple lines that lack sprites.</p> <p>A more compact procedure is</p> <div class="language- extra-class"><pre class="language-text"><code> run_dma:  ; This part is in ROM
+  ld a, start address / 100h
+  ld bc, 2946h  ; B: wait time; C: OAM trigger
+  jp run_dma_hrampart
+
+ run_dma_hrampart:
+  ldh ($FF00+c), a
+ wait:
+  dec b
+  jr nz,wait
+  ret
+</code></pre></div><p>which should be called with a = start address / 100h, bc = 2946h. This
+saves 5 bytes of HRAM, but is slightly slower in most cases because of
+the jump into the HRAM part.</p> <h2 id="lcd-vram-dma-transfers-cgb-only"><a href="#lcd-vram-dma-transfers-cgb-only" class="header-anchor">#</a> LCD VRAM DMA Transfers (CGB only)</h2> <h4 id="ff51-hdma1-cgb-mode-only-new-dma-source-high"><a href="#ff51-hdma1-cgb-mode-only-new-dma-source-high" class="header-anchor">#</a> FF51 - HDMA1 - CGB Mode Only - New DMA Source, High</h4> <h4 id="ff52-hdma2-cgb-mode-only-new-dma-source-low"><a href="#ff52-hdma2-cgb-mode-only-new-dma-source-low" class="header-anchor">#</a> FF52 - HDMA2 - CGB Mode Only - New DMA Source, Low</h4> <p>These two registers specify the address at which the transfer will read
+data from. Normally, this should be either in ROM, SRAM or WRAM, thus
+either in range 0000-7FF0 or A000-DFF0. [Note : this has yet to be
+tested on Echo RAM, OAM, FEXX, IO and HRAM]. Trying to specify a source
+address in VRAM will cause garbage to be copied.</p> <p>The four lower bits of this address will be ignored and treated as 0.</p> <h4 id="ff53-hdma3-cgb-mode-only-new-dma-destination-high"><a href="#ff53-hdma3-cgb-mode-only-new-dma-destination-high" class="header-anchor">#</a> FF53 - HDMA3 - CGB Mode Only - New DMA Destination, High</h4> <h4 id="ff54-hdma4-cgb-mode-only-new-dma-destination-low"><a href="#ff54-hdma4-cgb-mode-only-new-dma-destination-low" class="header-anchor">#</a> FF54 - HDMA4 - CGB Mode Only - New DMA Destination, Low</h4> <p>These two registers specify the address within 8000-9FF0 to which the
+data will be copied. Only bits 12-4 are respected; others are ignored.
+The four lower bits of this address will be ignored and treated as 0.</p> <h4 id="ff55-hdma5-cgb-mode-only-new-dma-length-mode-start"><a href="#ff55-hdma5-cgb-mode-only-new-dma-length-mode-start" class="header-anchor">#</a> FF55 - HDMA5 - CGB Mode Only - New DMA Length/Mode/Start</h4> <p>These registers are used to initiate a DMA transfer from ROM or RAM to
+VRAM. The Source Start Address may be located at 0000-7FF0 or A000-DFF0,
+the lower four bits of the address are ignored (treated as zero). The
+Destination Start Address may be located at 8000-9FF0, the lower four
+bits of the address are ignored (treated as zero), the upper 3 bits are
+ignored either (destination is always in VRAM).</p> <p>Writing to this register starts the transfer, the lower 7 bits of which
+specify the Transfer Length (divided by 10h, minus 1), ie. lengths of
+10h-800h bytes can be defined by the values 00h-7Fh. The upper bit
+indicates the Transfer Mode:</p> <h5 id="bit7-0-general-purpose-dma"><a href="#bit7-0-general-purpose-dma" class="header-anchor">#</a> Bit7=0 - General Purpose DMA</h5> <p>When using this transfer method,
+all data is transferred at once. The execution of the program is halted
+until the transfer has completed. Note that the General Purpose DMA
+blindly attempts to copy the data, even if the LCD controller is
+currently accessing VRAM. So General Purpose DMA should be used only if
+the Display is disabled, or during V-Blank, or (for rather short blocks)
+during H-Blank. The execution of the program continues when the transfer
+has been completed, and FF55 then contains a value of FFh.</p> <h5 id="bit7-1-h-blank-dma"><a href="#bit7-1-h-blank-dma" class="header-anchor">#</a> Bit7=1 - H-Blank DMA</h5> <p>The H-Blank DMA transfers 10h bytes of
+data during each H-Blank, ie. at LY=0-143, no data is transferred during
+V-Blank (LY=144-153), but the transfer will then continue at LY=00. The
+execution of the program is halted during the separate transfers, but
+the program execution continues during the 'spaces' between each data
+block. Note that the program should not change the Destination VRAM bank
+(FF4F), or the Source ROM/RAM bank (in case data is transferred from
+bankable memory) until the transfer has completed! (The transfer should
+be paused as described below while the banks are switched)</p> <p>Reading from Register FF55 returns the remaining length (divided by 10h,
+minus 1), a value of 0FFh indicates that the transfer has completed. It
+is also possible to terminate an active H-Blank transfer by writing zero
+to Bit 7 of FF55. In that case reading from FF55 will return how many
+$10 &quot;blocks&quot; remained (minus 1) in the lower 7 bits, but Bit 7 will
+be read as &quot;1&quot;. Stopping the transfer doesn't set HDMA1-4 to $FF.</p> <h4 id="precautions"><a href="#precautions" class="header-anchor">#</a> Precautions</h4> <p>H-Blank DMA should not be started (write to FF55) during a H-Blank
+period (STAT mode 0).</p> <p>If the transfer's destination address overflows, the transfer stops
+prematurely. [Note : what's the state of the registers if this happens
+?]</p> <h4 id="confirming-if-the-dma-transfer-is-active"><a href="#confirming-if-the-dma-transfer-is-active" class="header-anchor">#</a> Confirming if the DMA Transfer is Active</h4> <p>Reading Bit 7 of FF55 can be used to confirm if the DMA transfer is
+active (1=Not Active, 0=Active). This works under any circumstances -
+after completion of General Purpose, or H-Blank Transfer, and after
+manually terminating a H-Blank Transfer.</p> <h4 id="transfer-timings"><a href="#transfer-timings" class="header-anchor">#</a> Transfer Timings</h4> <p>In both Normal Speed and Double Speed Mode it takes about 8 μs to
+transfer a block of 10h bytes. That are 8 tstates in Normal Speed Mode,
+and 16 'fast' tstates in Double Speed Mode. Older MBC controllers
+(like MBC1-4) and slower ROMs are not guaranteed to support General
+Purpose or H-Blank DMA, that's because there are always 2 bytes
+transferred per microsecond (even if the itself program runs it Normal
+Speed Mode).</p> <h2 id="vram-tile-data"><a href="#vram-tile-data" class="header-anchor">#</a> VRAM Tile Data</h2> <p>Tile Data is stored in VRAM at addresses $8000-97FF; with one tile
+being 16 bytes large, this area defines data for 384 Tiles. In CGB Mode,
+this is doubled (768 tiles) because of the two VRAM banks.</p> <p>Each tile is sized 8x8 pixels and has a color depth of 4 colors/gray
+shades. Tiles can be displayed as part of the Background/Window map,
+and/or as OAM tiles (foreground sprites). Note that foreground sprites
+don't use color 0 - it's transparent instead.</p> <p>There are three &quot;blocks&quot; of 128 tiles each:</p> <ul><li>Block 0 is $8000-87FF</li> <li>Block 1 is $8800-8FFF</li> <li>Block 2 is $9000-97FF</li></ul> <p>Tiles are always indexed using a 8-bit integer, but the addressing
+method may differ. The &quot;8000 method&quot; uses $8000 as its base pointer
+and uses an unsigned addressing, meaning that tiles 0-127 are in block
+0, and tiles 128-255 are in block 1. The &quot;8800 method&quot; uses $9000 as
+its base pointer and uses a signed addressing. To put it differently,
+&quot;8000 addressing&quot; takes tiles 0-127 from block 0 and tiles 128-255
+from block 1, whereas &quot;8800 addressing&quot; takes tiles 0-127 from block 2
+and tiles 128-255 from block 1. (You can notice that block 1 is shared
+by both addressing methods)</p> <p>Sprites always use 8000 addressing, but the BG and Window can use either
+mode, controlled by <a href="#LCDC.4_-_BG_.26_Window_Tile_Data_Select" title="wikilink">LCDC bit
+4</a>.</p> <p>Each Tile occupies 16 bytes, where each 2 bytes represent a line:</p> <div class="language- extra-class"><pre class="language-text"><code>Byte 0-1  First Line (Upper 8 pixels)
+Byte 2-3  Next Line
+etc.`
+</code></pre></div><p>For each line, the first byte defines the least significant bits of the
+color numbers for each pixel, and the second byte defines the upper bits
+of the color numbers. In either case, Bit 7 is the leftmost pixel, and
+Bit 0 the rightmost. For example : let's say you have $57 $36 (in
+this order in memory). To obtain the color index for the leftmost pixel,
+you take bit 7 of both bytes : 0, and 0. Thus the index is 00b = 0. For
+the second pixel, repeat with bit 6 : 1, and 0. Thus the index is 01b =
+1 (remember to flip the order of the bits !). If you repeat the
+operation you'll find that the indexes for the 8 pixels are 0 1 2 3 0 3
+3 1.</p> <p>A more visual explanation can be found
+<a href="https://www.huderlem.com/demos/gameboy2bpp.html" target="_blank" rel="noopener noreferrer">here<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <p>So, each pixel is having a color number in range from 0-3. The color
+numbers are translated into real colors (or gray shades) depending on
+the current palettes. The palettes are defined through registers
+<a href="#FF47_-_BGP_-_BG_Palette_Data_.28R.2FW.29_-_Non_CGB_Mode_Only" title="wikilink">BGP</a>,
+<a href="#FF48_-_OBP0_-_Object_Palette_0_Data_.28R.2FW.29_-_Non_CGB_Mode_Only" title="wikilink">OBP0</a>
+and
+<a href="#FF49_-_OBP1_-_Object_Palette_1_Data_.28R.2FW.29_-_Non_CGB_Mode_Only" title="wikilink">OBP1</a>
+(Non CGB Mode), and
+<a href="#FF68_-_BCPS.2FBGPI_-_CGB_Mode_Only_-_Background_Palette_Index" title="wikilink">BCPS/BGPI</a>,
+<a href="#FF69_-_BCPD.2FBGPD_-_CGB_Mode_Only_-_Background_Palette_Data" title="wikilink">BCPD/BGPD</a>,
+<a href="#FF6A_-_OCPS.2FOBPI_-_CGB_Mode_Only_-_Sprite_Palette_Index.2C_FF6B_-_OCPD.2FOBPD_-_CGB_Mode_Only_-_Sprite_Palette_Data" title="wikilink">OCPS/OBPI and
+OCPD/OBPD</a>
+(CGB Mode).</p> <h2 id="vram-background-maps"><a href="#vram-background-maps" class="header-anchor">#</a> VRAM Background Maps</h2> <p>The Game Boy contains two 32x32 tile background maps in VRAM at
+addresses 9800h-9BFFh and 9C00h-9FFFh. Each can be used either to
+display &quot;normal&quot; background, or &quot;window&quot; background.</p> <h4 id="bg-map-tile-numbers"><a href="#bg-map-tile-numbers" class="header-anchor">#</a> BG Map Tile Numbers</h4> <p>An area of VRAM known as Background Tile Map contains the numbers of
+tiles to be displayed. It is organized as 32 rows of 32 bytes each. Each
+byte contains a number of a tile to be displayed.</p> <p>Tile patterns are taken from the Tile Data Table using either of the two
+addressing modes (described <a href="#VRAM_Tile_Data" title="wikilink">above</a>), which
+can be selected via LCDC register.</p> <p>As one background tile has a size of 8x8 pixels, the BG maps may hold a
+picture of 256x256 pixels, and an area of 160x144 pixels of this picture
+can be displayed on the LCD screen.</p> <h4 id="bg-map-attributes-cgb-mode-only"><a href="#bg-map-attributes-cgb-mode-only" class="header-anchor">#</a> BG Map Attributes (CGB Mode only)</h4> <p>In CGB Mode, an additional map of 32x32 bytes is stored in VRAM Bank 1
+(each byte defines attributes for the corresponding tile-number map
+entry in VRAM Bank 0, ie. 1:9800 defines the attributes for the tile at
+0:9800):</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 0-2  Background Palette number  (BGP0-7)
+Bit 3    Tile VRAM Bank number      (0=Bank 0, 1=Bank 1)
+Bit 4    Not used
+Bit 5    Horizontal Flip            (0=Normal, 1=Mirror horizontally)
+Bit 6    Vertical Flip              (0=Normal, 1=Mirror vertically)
+Bit 7    BG-to-OAM Priority         (0=Use OAM priority bit, 1=BG Priority)
+</code></pre></div><p>When Bit 7 is set, the corresponding BG tile will have priority above
+all OBJs (regardless of the priority bits in OAM memory). There's also
+a Master Priority flag in LCDC register Bit 0 which overrides all other
+priority bits when cleared.</p> <p>Note that, if the map entry at 0:9800 is tile $2A, the attribute at
+1:9800 doesn't define properties for ALL tiles $2A on-screen, but only
+the one at 0:9800 !</p> <h4 id="normal-background-bg"><a href="#normal-background-bg" class="header-anchor">#</a> Normal Background (BG)</h4> <p>The SCY and SCX registers can be used to scroll the background, allowing
+to select the origin of the visible 160x144 pixel area within the total
+256x256 pixel background map. Background wraps around the screen (i.e.
+when part of it goes off the screen, it appears on the opposite side.)</p> <h4 id="the-window"><a href="#the-window" class="header-anchor">#</a> The Window</h4> <p>Besides background, there is also a &quot;window&quot; overlaying the
+background. The window is not scrollable, that is, it is always
+displayed starting from its left upper corner. The location of a window
+on the screen can be adjusted via WX and WY registers. Screen
+coordinates of the top left corner of a window are WX-7,WY. The tiles
+for the window are stored in the Tile Data Table. Both the Background
+and the window share the same Tile Data Table.</p> <p>Both background and window can be disabled or enabled separately via
+bits in the LCDC register.</p> <h2 id="vram-banks-cgb-only"><a href="#vram-banks-cgb-only" class="header-anchor">#</a> VRAM Banks (CGB only)</h2> <p>The CGB has twice the VRAM of the DMG, but it is banked and either bank
+has a different purpose.</p> <h4 id="ff4f-vbk-cgb-mode-only-vram-bank-r-w"><a href="#ff4f-vbk-cgb-mode-only-vram-bank-r-w" class="header-anchor">#</a> FF4F - VBK - CGB Mode Only - VRAM Bank (R/W)</h4> <p>This register can be written to to change VRAM banks. Only bit 0
+matters, all other bits are ignored.</p> <h4 id="vram-bank-1"><a href="#vram-bank-1" class="header-anchor">#</a> VRAM bank 1</h4> <p>VRAM bank 1 is split like VRAM bank 0 ; 8000-97FF also stores tiles
+(just like in bank 0), which can be accessed the same way as (and at the
+same time as) bank 0 tiles. 9800-9FFF contains the attributes for the
+corresponding Tile Maps.</p> <p>Reading from this register will return the number of the currently
+loaded VRAM bank in bit 0, and all other bits will be set to 1.</p> <h2 id="vram-sprite-attribute-table-oam"><a href="#vram-sprite-attribute-table-oam" class="header-anchor">#</a> VRAM Sprite Attribute Table (OAM)</h2> <p>Gameboy video controller can display up to 40 sprites either in 8x8 or
+in 8x16 pixels. Because of a limitation of hardware, only ten sprites
+can be displayed per scan line. Sprite patterns have the same format as
+BG tiles, but they are taken from the Sprite Pattern Table located at
+$8000-8FFF and have unsigned numbering.</p> <p>Sprite attributes reside in the Sprite Attribute Table (OAM - Object
+Attribute Memory) at $FE00-FE9F. Each of the 40 entries consists of
+four bytes with the following meanings:</p> <h4 id="byte0-y-position"><a href="#byte0-y-position" class="header-anchor">#</a> Byte0 - Y Position</h4> <p>Specifies the sprites vertical position on the screen (minus 16). An
+off-screen value (for example, Y=0 or Y&gt;=160) hides the sprite.</p> <h4 id="byte1-x-position"><a href="#byte1-x-position" class="header-anchor">#</a> Byte1 - X Position</h4> <p>Specifies the sprites horizontal position on the screen (minus 8). An
+off-screen value (X=0 or X&gt;=168) hides the sprite, but the sprite still
+affects the priority ordering - a better way to hide a sprite is to set
+its Y-coordinate off-screen.</p> <h4 id="byte2-tile-pattern-number"><a href="#byte2-tile-pattern-number" class="header-anchor">#</a> Byte2 - Tile/Pattern Number</h4> <p>Specifies the sprites Tile Number (00-FF). This (unsigned) value selects
+a tile from memory at 8000h-8FFFh. In CGB Mode this could be either in
+VRAM Bank 0 or 1, depending on Bit 3 of the following byte. In 8x16
+mode, the lower bit of the tile number is ignored. IE: the upper 8x8
+tile is &quot;NN AND FEh&quot;, and the lower 8x8 tile is &quot;NN OR 01h&quot;.</p> <h4 id="byte3-attributes-flags"><a href="#byte3-attributes-flags" class="header-anchor">#</a> Byte3 - Attributes/Flags:</h4> <div class="language- extra-class"><pre class="language-text"><code> Bit7   OBJ-to-BG Priority (0=OBJ Above BG, 1=OBJ Behind BG color 1-3)
+        (Used for both BG and Window. BG color 0 is always behind OBJ)
+ Bit6   Y flip          (0=Normal, 1=Vertically mirrored)
+ Bit5   X flip          (0=Normal, 1=Horizontally mirrored)
+ Bit4   Palette number  **Non CGB Mode Only** (0=OBP0, 1=OBP1)
+ Bit3   Tile VRAM-Bank  **CGB Mode Only**     (0=Bank 0, 1=Bank 1)
+ Bit2-0 Palette number  **CGB Mode Only**     (OBP0-7)
+</code></pre></div><h4 id="sprite-priorities-and-conflicts"><a href="#sprite-priorities-and-conflicts" class="header-anchor">#</a> Sprite Priorities and Conflicts</h4> <p>During each scanline's OAM scan, the LCD controller compares LY to each
+sprite's Y position to find the 10 sprites on that line that appear
+first in OAM ($FE00-$FE03 being the first). It discards the rest,
+allowing only 10 sprites to be displayed on any one line. When this
+limit is exceeded, sprites appearing later in OAM won't be displayed.
+To keep unused sprites from affecting onscreen sprites, set their Y
+coordinate to Y = 0 or Y &gt;= 160 (144 + 16) (Note : Y &lt;= 8 also works
+if sprite size is set to 8x8). Just setting the X coordinate to X = 0 or
+X &gt;= 168 (160 + 8) on a sprite will hide it, but it will still affect
+other sprites sharing the same lines.</p> <p>If using <a href="BGB" title="wikilink">BGB</a>, in the VRAM viewer - OAM tab, hover your
+mouse over the small screen to highlight the sprites on a line. Sprites
+hidden due to the limitation will be highlighted in red.</p> <p>When these 10 sprites overlap, the highest priority one will appear
+above all others, etc. (Thus, no Z-fighting.) In CGB mode, the first
+sprite in OAM ($FE00-$FE03) has the highest priority, and so on. In
+Non-CGB mode, the smaller the X coordinate, the higher the priority. The
+tie breaker (same X coordinates) is the same priority as in CGB mode.</p> <p>The priority calculation between sprites disregards OBJ-to-BG Priority
+(attribute bit 7). Only the highest-priority nonzero sprite pixel at any
+given point is compared against the background. Thus if a sprite with a
+higher priority (based on OAM index) but with OBJ-to-BG Priority turned
+on overlaps a sprite with a lower priority and a nonzero background
+pixel, the background pixel is displayed regardless of the
+lower-priority sprite's OBJ-to-BG Priority.</p> <h4 id="writing-data-to-oam-memory"><a href="#writing-data-to-oam-memory" class="header-anchor">#</a> Writing Data to OAM Memory</h4> <p>The recommended method is to write the data to normal RAM first, and to
+copy that RAM to OAM by using the DMA transfer function, initiated
+through DMA register (FF46). Beside for that, it is also possible to
+write data directly to the OAM area by using normal LD commands, this
+works only during the H-Blank and V-Blank periods. The current state of
+the LCD controller can be read out from the STAT register (FF41).</p> <h2 id="accessing-vram-and-oam"><a href="#accessing-vram-and-oam" class="header-anchor">#</a> Accessing VRAM and OAM</h2> <h4 id="caution"><a href="#caution" class="header-anchor">#</a> CAUTION</h4> <p>When the LCD Controller is drawing the screen it is directly reading
+from Video Memory (VRAM) and from the Sprite Attribute Table (OAM).
+During these periods the Gameboy CPU may not access the VRAM and OAM.
+That means, any attempts to write to VRAM/OAM are ignored (the data
+remains unchanged). And any attempts to read from VRAM/OAM will return
+undefined data (typically a value of FFh).</p> <p>For this reason the program should verify if VRAM/OAM is accessible
+before actually reading or writing to it. This is usually done by
+reading the Mode Bits from the STAT Register (FF41). When doing this (as
+described in the examples below) you should take care that no interrupts
+occur between the wait loops and the following memory access - the
+memory is guaranteed to be accessible only for a few cycles directly
+after the wait loops have completed.</p> <h4 id="vram-memory-at-8000h-9fffh-is-accessible-during-mode-0-2"><a href="#vram-memory-at-8000h-9fffh-is-accessible-during-mode-0-2" class="header-anchor">#</a> VRAM (memory at 8000h-9FFFh) is accessible during Mode 0-2</h4> <div class="language- extra-class"><pre class="language-text"><code>Mode 0 - H-Blank Period,
+Mode 1 - V-Blank Period, and
+Mode 2 - Searching OAM Period
+</code></pre></div><p>A typical procedure that waits for accessibility of VRAM would be:</p> <div class="language- extra-class"><pre class="language-text"><code>ld   hl,0FF41h    ;-STAT Register
+@@wait:           ;
+bit  1,(hl)       ; Wait until Mode is 0 or 1
+jr   nz,@@wait    ;
+</code></pre></div><p>Even if the procedure gets executed at the <em>end</em> of Mode 0 or 1, it is
+still proof to assume that VRAM can be accessed for a few more cycles
+because in either case the following period is Mode 2 which allows
+access to VRAM either. However, be careful about STAT LCD interrupts or
+other interrupts that could cause the LCD to be back in mode 3 by the
+time it returns. In CGB Mode an alternate method to write data to VRAM
+is to use the HDMA Function (FF51-FF55).</p> <p>If you're not using LCD interrupts, another way to synchronize to the
+start of mode 0 is to use <code>halt</code> with IME turned off (<code>di</code>). This allows
+use of the entire mode 0 on one line and mode 2 on the following line,
+which sum to 165 to 288 dots. For comparison, at single speed (4 dots
+per machine cycle), a <a href="Popslide" title="wikilink">copy from stack</a> that takes
+9 cycles per 2 bytes can push 8 bytes (half a tile) in 144 dots, which
+fits within the worst case timing for mode 0+2.</p> <h4 id="oam-memory-at-fe00h-fe9fh-is-accessible-during-mode-0-1"><a href="#oam-memory-at-fe00h-fe9fh-is-accessible-during-mode-0-1" class="header-anchor">#</a> OAM (memory at FE00h-FE9Fh) is accessible during Mode 0-1</h4> <div class="language- extra-class"><pre class="language-text"><code>Mode 0 - H-Blank Period
+Mode 1 - V-Blank Period
+</code></pre></div><p>Aside from that, OAM can be accessed at any time by using the DMA
+Function (FF46). When directly reading or writing to OAM, a typical
+procedure that waits for accessibility of OAM Memory would be:</p> <div class="language- extra-class"><pre class="language-text"><code> ld   hl,0FF41h    ;-STAT Register
+@@wait1:           ;
+ bit  1,(hl)       ; Wait until Mode is -NOT- 0 or 1
+ jr   z,@@wait1    ;
+@@wait2:           ;
+ bit  1,(hl)       ; Wait until Mode 0 or 1 -BEGINS-
+ jr   nz,@@wait2   ;
+</code></pre></div><p>The two wait loops ensure that Mode 0 or 1 will last for a few clock
+cycles after completion of the procedure. In V-Blank period it might be
+recommended to skip the whole procedure - and in most cases using the
+above mentioned DMA function would be more recommended anyways.</p> <h4 id="note"><a href="#note" class="header-anchor">#</a> Note</h4> <p>When the display is disabled, both VRAM and OAM are accessible at any
+time. The downside is that the screen is blank (white) during this
+period, so that disabling the display would be recommended only during
+initialization.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e9f16c37.js" defer></script><script src="/assets/js/2.6b17e999.js" defer></script><script src="/assets/js/5.87285620.js" defer></script>
+  </body>
+</html>
