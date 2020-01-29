@@ -7,7 +7,7 @@
     <meta name="description" content="">
     
     
-    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.10956ae0.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.beb21b2f.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
+    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.a0cb9afb.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.c76138b2.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
     <link rel="stylesheet" href="/pandocs/assets/css/0.styles.d2a81c02.css">
   </head>
   <body>
@@ -235,14 +235,11 @@ intensities are regularly used by most existing CGB games for medium and
 darker colors.</p> <p>Newer CGB games may avoid this effect by changing palette data when
 detecting GBA hardware (<a href="CGB_Registers#Detecting_CGB_.28and_GBA.29_functions" title="wikilink">see
 how</a>).
-Based on measurement of GBC and GBA palettes using the &quot;144p Test
-Suite&quot; ROM, a fairly close approximation is GBA = GBC * 3/4 + 8h for
+Based on measurement of GBC and GBA palettes using the <a href="https://github.com/pinobatch/240p-test-mini/tree/master/gameboy" target="_blank" rel="noopener noreferrer">144p Test
+Suite<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> ROM, a fairly close approximation is GBA = GBC * 3/4 + 8h for
 each R,G,B intensity. The result isn't quite perfect, and it may turn
 out that the color mixing is different also; anyways, it'd be still
-ways better than no conversion. Asides, this translation method should
-have been VERY easy to implement in GBA hardware directly, even though
-Nintendo obviously failed to do so. How did they say, &quot;This seal is
-your assurance for excellence in workmanship&quot; and so on?</p> <p>This problem with low brightness levels does not affect later GBA SP
+ways better than no conversion.</p> <p>This problem with low brightness levels does not affect later GBA SP
 units and Game Boy Player. Thus ideally, the player should have control
 of this brightness correction.</p> <h2 id="lcd-oam-dma-transfers"><a href="#lcd-oam-dma-transfers" class="header-anchor">#</a> LCD OAM DMA Transfers</h2> <h4 id="ff46-dma-dma-transfer-and-start-address-r-w"><a href="#ff46-dma-dma-transfer-and-start-address-r-w" class="header-anchor">#</a> FF46 - DMA - DMA Transfer and Start Address (R/W)</h4> <p>Writing to this register launches a DMA transfer from ROM or RAM to OAM
 memory (sprite attribute table). The written value specifies the
@@ -452,7 +449,7 @@ copy that RAM to OAM by using the DMA transfer function, initiated
 through DMA register (FF46). Beside for that, it is also possible to
 write data directly to the OAM area by using normal LD commands, this
 works only during the H-Blank and V-Blank periods. The current state of
-the LCD controller can be read out from the STAT register (FF41).</p> <h2 id="accessing-vram-and-oam"><a href="#accessing-vram-and-oam" class="header-anchor">#</a> Accessing VRAM and OAM</h2> <div class="custom-block warning"><p class="custom-block-title">CAUTION</p> <p>When the LCD Controller is drawing the screen it is directly reading
+the LCD controller can be read out from the STAT register (FF41).</p> <h2 id="accessing-vram-and-oam"><a href="#accessing-vram-and-oam" class="header-anchor">#</a> Accessing VRAM and OAM</h2> <div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>When the LCD Controller is drawing the screen it is directly reading
 from Video Memory (VRAM) and from the Sprite Attribute Table (OAM).
 During these periods the Gameboy CPU may not access the VRAM and OAM.
 That means, any attempts to write to VRAM/OAM are ignored (the data
@@ -663,6 +660,6 @@ cause no difference. The only meaningful purpose of the keystroke
 interrupt would be to terminate STOP (low power) standby state. GBA SP,
 because of the different buttons used, seems to not be affected by
 switch bounce.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/pandocs/assets/js/app.10956ae0.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.beb21b2f.js" defer></script>
+    <script src="/pandocs/assets/js/app.a0cb9afb.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.c76138b2.js" defer></script>
   </body>
 </html>
