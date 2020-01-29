@@ -7,7 +7,7 @@
     <meta name="description" content="">
     
     
-    <link rel="preload" href="/pandocs/assets/css/0.styles.a1221fbe.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.5430f0b9.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.378e18de.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
+    <link rel="preload" href="/pandocs/assets/css/0.styles.a1221fbe.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.3123f1fd.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.50f83f37.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
     <link rel="stylesheet" href="/pandocs/assets/css/0.styles.a1221fbe.css">
   </head>
   <body>
@@ -17,7 +17,7 @@
   Contribute
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="pan-docs"><a href="#pan-docs" class="header-anchor">#</a> Pan Docs</h1> <p>The single, most comprehensive technical reference to Game Boy available to the public.</p> <h3 id="table-of-contents"><a href="#table-of-contents" class="header-anchor">#</a> Table of Contents</h3> <ul><li>Overview
 <ul><li><a href="#about-the-pan-docs">About the Pan Docs</a></li> <li><a href="#specifications">Specifications</a></li> <li><a href="#memory-map">Memory Map</a></li></ul></li> <li>I/O Ports
-<ul><li><a href="#video-display">Video Display</a></li> <li>Sound Controller</li> <li>Joypad Input</li> <li>Serial Data Transfer (Link Cable)</li> <li>Timer and Divider Registers</li> <li>Interrupts</li> <li>CGB Registers</li> <li>SGB Functions</li></ul></li> <li>CPU Specifications
+<ul><li><a href="#video-display">Video Display</a></li> <li><a href="#sound-controller">Sound Controller</a></li> <li>Joypad Input</li> <li>Serial Data Transfer (Link Cable)</li> <li>Timer and Divider Registers</li> <li>Interrupts</li> <li>CGB Registers</li> <li>SGB Functions</li></ul></li> <li>CPU Specifications
 <ul><li>Registers and Flags</li> <li>Instruction Set</li> <li>Comparision with Z80</li></ul></li> <li>Cartridges
 <ul><li>Cartridge header</li> <li>MBC1</li> <li>MBC2</li> <li>MBC3</li> <li>MBC5</li> <li>MBC6</li> <li>MBC7</li> <li>HuC1</li></ul></li> <li>Accessories
 <ul><li>Gameboy Printer</li> <li>Gameboy Camera</li> <li>Gamegenie/Shark Cheats</li></ul></li> <li>Other
@@ -464,7 +464,144 @@ recommended to skip the whole procedure - and in most cases using the
 above mentioned DMA function would be more recommended anyways.</p> <h4 id="note"><a href="#note" class="header-anchor">#</a> Note</h4> <p>When the display is disabled, both VRAM and OAM are accessible at any
 time. The downside is that the screen is blank (white) during this
 period, so that disabling the display would be recommended only during
-initialization.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/pandocs/assets/js/app.5430f0b9.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.378e18de.js" defer></script>
+initialization.</p> <h1 id="sound-controller"><a href="#sound-controller" class="header-anchor">#</a> Sound Controller</h1> <p>There are two sound channels connected to the output terminals SO1 and
+SO2. There is also a input terminal Vin connected to the cartridge. It
+can be routed to either of both output terminals. GameBoy circuitry
+allows producing sound in four different ways:</p> <div class="language- extra-class"><pre class="language-text"><code>Quadrangular wave patterns with sweep and envelope functions
+Quadrangular wave patterns with envelope functions
+Voluntary wave patterns from wave RAM
+White noise with an envelope function
+</code></pre></div><p>These four sounds can be controlled independantly and then mixed
+separately for each of the output terminals.</p> <p>Sound registers may be set at all times while producing sound.</p> <p>(Sounds will have a 2.4% higher frequency on Super GB.)</p> <h2 id="sound-channel-1-tone-sweep"><a href="#sound-channel-1-tone-sweep" class="header-anchor">#</a> Sound Channel 1 - Tone &amp; Sweep</h2> <h4 id="ff10-nr10-channel-1-sweep-register-r-w"><a href="#ff10-nr10-channel-1-sweep-register-r-w" class="header-anchor">#</a> FF10 - NR10 - Channel 1 Sweep register (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code> Bit 6-4 - Sweep Time
+ Bit 3   - Sweep Increase/Decrease
+            0: Addition    (frequency increases)
+            1: Subtraction (frequency decreases)
+ Bit 2-0 - Number of sweep shift (n: 0-7)
+</code></pre></div><p>Sweep Time:</p> <div class="language- extra-class"><pre class="language-text"><code>000: sweep off - no freq change
+001: 7.8 ms  (1/128Hz)
+010: 15.6 ms (2/128Hz)
+011: 23.4 ms (3/128Hz)
+100: 31.3 ms (4/128Hz)
+101: 39.1 ms (5/128Hz)
+110: 46.9 ms (6/128Hz)
+111: 54.7 ms (7/128Hz)
+</code></pre></div><p>The change of frequency (NR13,NR14) at each shift is calculated by the
+following formula where X(0) is initial freq &amp; X(t-1) is last freq:</p> <p><code>X(t) = X(t-1) +/- X(t-1)/2^n</code></p> <h4 id="ff11-nr11-channel-1-sound-length-wave-pattern-duty-r-w"><a href="#ff11-nr11-channel-1-sound-length-wave-pattern-duty-r-w" class="header-anchor">#</a> FF11 - NR11 - Channel 1 Sound length/Wave pattern duty (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 7-6 - Wave Pattern Duty (Read/Write)
+Bit 5-0 - Sound length data (Write Only) (t1: 0-63)
+</code></pre></div><p>Wave Duty:</p> <div class="language- extra-class"><pre class="language-text"><code>00: 12.5% ( _-------_-------_------- )
+01: 25%   ( __------__------__------ )
+10: 50%   ( ____----____----____---- ) (normal)
+11: 75%   ( ______--______--______-- )
+</code></pre></div><p>Sound Length = (64-t1)*(1/256) seconds The Length value is used only if
+Bit 6 in NR14 is set.</p> <h4 id="ff12-nr12-channel-1-volume-envelope-r-w"><a href="#ff12-nr12-channel-1-volume-envelope-r-w" class="header-anchor">#</a> FF12 - NR12 - Channel 1 Volume Envelope (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code> Bit 7-4 - Initial Volume of envelope (0-0Fh) (0=No Sound)
+ Bit 3   - Envelope Direction (0=Decrease, 1=Increase)
+ Bit 2-0 - Number of envelope sweep (n: 0-7)
+           (If zero, stop envelope operation.)
+</code></pre></div><p>Length of 1 step = n*(1/64) seconds</p> <h4 id="ff13-nr13-channel-1-frequency-lo-write-only"><a href="#ff13-nr13-channel-1-frequency-lo-write-only" class="header-anchor">#</a> FF13 - NR13 - Channel 1 Frequency lo (Write Only)</h4> <p>Lower 8 bits of 11 bit frequency (x). Next 3 bit are in NR14 ($FF14)</p> <h4 id="ff14-nr14-channel-1-frequency-hi-r-w"><a href="#ff14-nr14-channel-1-frequency-hi-r-w" class="header-anchor">#</a> FF14 - NR14 - Channel 1 Frequency hi (R/W)</h4> <p><code>Bit 7   - Initial (1=Restart Sound)     (Write Only)</code><br> <code>Bit 6   - Counter/consecutive selection (Read/Write)</code><br> <code>(1=Stop output when length in NR11 expires)</code><br> <code>Bit 2-0 - Frequency's higher 3 bits (x) (Write Only)</code></p> <p>Frequency = 131072/(2048-x) Hz</p> <h2 id="sound-channel-2-tone"><a href="#sound-channel-2-tone" class="header-anchor">#</a> Sound Channel 2 - Tone</h2> <p>This sound channel works exactly as channel 1, except that it doesn't
+have a Tone Envelope/Sweep Register.</p> <h4 id="ff16-nr21-channel-2-sound-length-wave-pattern-duty-r-w"><a href="#ff16-nr21-channel-2-sound-length-wave-pattern-duty-r-w" class="header-anchor">#</a> FF16 - NR21 - Channel 2 Sound Length/Wave Pattern Duty (R/W)</h4> <p><code>Bit 7-6 - Wave Pattern Duty (Read/Write)</code><br> <code>Bit 5-0 - Sound length data (Write Only) (t1: 0-63)</code></p> <p>Wave Duty:</p> <p><code>00: 12.5% ( _-------_-------_------- )</code><br> <code>01: 25%   ( __------__------__------ )</code><br> <code>10: 50%   ( ____----____----____---- ) (normal)</code><br> <code>11: 75%   ( ______--______--______-- )</code></p> <p>Sound Length = (64-t1)*(1/256) seconds The Length value is used only if
+Bit 6 in NR24 is set.</p> <h4 id="ff17-nr22-channel-2-volume-envelope-r-w"><a href="#ff17-nr22-channel-2-volume-envelope-r-w" class="header-anchor">#</a> FF17 - NR22 - Channel 2 Volume Envelope (R/W)</h4> <p><code>Bit 7-4 - Initial Volume of envelope (0-0Fh) (0=No Sound)</code><br> <code>Bit 3   - Envelope Direction (0=Decrease, 1=Increase)</code><br> <code>Bit 2-0 - Number of envelope sweep (n: 0-7)</code><br> <code>(If zero, stop envelope operation.)</code></p> <p>Length of 1 step = n*(1/64) seconds</p> <h4 id="ff18-nr23-channel-2-frequency-lo-data-w"><a href="#ff18-nr23-channel-2-frequency-lo-data-w" class="header-anchor">#</a> FF18 - NR23 - Channel 2 Frequency lo data (W)</h4> <p>Frequency's lower 8 bits of 11 bit data (x). Next 3 bits are in NR24
+($FF19).</p> <h4 id="ff19-nr24-channel-2-frequency-hi-data-r-w"><a href="#ff19-nr24-channel-2-frequency-hi-data-r-w" class="header-anchor">#</a> FF19 - NR24 - Channel 2 Frequency hi data (R/W)</h4> <p><code>Bit 7   - Initial (1=Restart Sound)     (Write Only)</code><br> <code>Bit 6   - Counter/consecutive selection (Read/Write)</code><br> <code>(1=Stop output when length in NR21 expires)</code><br> <code>Bit 2-0 - Frequency's higher 3 bits (x) (Write Only)</code></p> <p>Frequency = 131072/(2048-x) Hz</p> <h2 id="sound-channel-3-wave-output"><a href="#sound-channel-3-wave-output" class="header-anchor">#</a> Sound Channel 3 - Wave Output</h2> <p>This channel can be used to output digital sound, the length of the
+sample buffer (Wave RAM) is limited to 32 digits. This sound channel can
+be also used to output normal tones when initializing the Wave RAM by a
+square wave. This channel doesn't have a volume envelope register.</p> <h4 id="ff1a-nr30-channel-3-sound-on-off-r-w"><a href="#ff1a-nr30-channel-3-sound-on-off-r-w" class="header-anchor">#</a> FF1A - NR30 - Channel 3 Sound on/off (R/W)</h4> <p><code>Bit 7 - Sound Channel 3 Off  (0=Stop, 1=Playback)  (Read/Write)</code></p> <h4 id="ff1b-nr31-channel-3-sound-length"><a href="#ff1b-nr31-channel-3-sound-length" class="header-anchor">#</a> FF1B - NR31 - Channel 3 Sound Length</h4> <p><code>Bit 7-0 - Sound length (t1: 0 - 255)</code></p> <p>Sound Length = (256-t1)*(1/256) seconds This value is used only if Bit
+6 in NR34 is set.</p> <h4 id="ff1c-nr32-channel-3-select-output-level-r-w"><a href="#ff1c-nr32-channel-3-select-output-level-r-w" class="header-anchor">#</a> FF1C - NR32 - Channel 3 Select output level (R/W)</h4> <p><code>Bit 6-5 - Select output level (Read/Write)</code></p> <p>Possible Output levels are:</p> <p><code>0: Mute (No sound)</code><br> <code>1: 100% Volume (Produce Wave Pattern RAM Data as it is)</code><br> <code>2:  50% Volume (Produce Wave Pattern RAM data shifted once to the right)</code><br> <code>3:  25% Volume (Produce Wave Pattern RAM data shifted twice to the right)</code></p> <h4 id="ff1d-nr33-channel-3-frequency-s-lower-data-w"><a href="#ff1d-nr33-channel-3-frequency-s-lower-data-w" class="header-anchor">#</a> FF1D - NR33 - Channel 3 Frequency's lower data (W)</h4> <p>Lower 8 bits of an 11 bit frequency (x).</p> <h4 id="ff1e-nr34-channel-3-frequency-s-higher-data-r-w"><a href="#ff1e-nr34-channel-3-frequency-s-higher-data-r-w" class="header-anchor">#</a> FF1E - NR34 - Channel 3 Frequency's higher data (R/W)</h4> <p><code>Bit 7   - Initial (1=Restart Sound)     (Write Only)</code><br> <code>Bit 6   - Counter/consecutive selection (Read/Write)</code><br> <code>(1=Stop output when length in NR31 expires)</code><br> <code>Bit 2-0 - Frequency's higher 3 bits (x) (Write Only)</code></p> <p>Frequency = 4194304/(64*(2048-x)) Hz = 65536/(2048-x) Hz</p> <h4 id="ff30-ff3f-wave-pattern-ram"><a href="#ff30-ff3f-wave-pattern-ram" class="header-anchor">#</a> FF30-FF3F - Wave Pattern RAM</h4> <p><code>Contents - Waveform storage for arbitrary sound data</code></p> <p>This storage area holds 32 4-bit samples that are played back, upper 4
+bits first.</p> <p>Wave RAM should only be accessed while CH3 is disabled (NR30 bit 7
+reset), otherwise accesses will behave weirdly.</p> <p>On almost all models, the byte will be written at the offset CH3 is
+currently reading. On GBA, the write will simply be ignored.</p> <h2 id="sound-channel-4-noise"><a href="#sound-channel-4-noise" class="header-anchor">#</a> Sound Channel 4 - Noise</h2> <p>This channel is used to output white noise. This is done by randomly
+switching the amplitude between high and low at a given frequency.
+Depending on the frequency the noise will appear 'harder' or
+'softer'.</p> <p>It is also possible to influence the function of the random generator,
+so the that the output becomes more regular, resulting in a limited
+ability to output Tone instead of Noise.</p> <h4 id="ff20-nr41-channel-4-sound-length-r-w"><a href="#ff20-nr41-channel-4-sound-length-r-w" class="header-anchor">#</a> FF20 - NR41 - Channel 4 Sound Length (R/W)</h4> <p><code>Bit 5-0 - Sound length data (t1: 0-63)</code></p> <p>Sound Length = (64-t1)*(1/256) seconds The Length value is used only if
+Bit 6 in NR44 is set.</p> <h4 id="ff21-nr42-channel-4-volume-envelope-r-w"><a href="#ff21-nr42-channel-4-volume-envelope-r-w" class="header-anchor">#</a> FF21 - NR42 - Channel 4 Volume Envelope (R/W)</h4> <p><code>Bit 7-4 - Initial Volume of envelope (0-0Fh) (0=No Sound)</code><br> <code>Bit 3   - Envelope Direction (0=Decrease, 1=Increase)</code><br> <code>Bit 2-0 - Number of envelope sweep (n: 0-7)</code><br> <code>(If zero, stop envelope operation.)</code></p> <p>Length of 1 step = n*(1/64) seconds</p> <h4 id="ff22-nr43-channel-4-polynomial-counter-r-w"><a href="#ff22-nr43-channel-4-polynomial-counter-r-w" class="header-anchor">#</a> FF22 - NR43 - Channel 4 Polynomial Counter (R/W)</h4> <p>The amplitude is randomly switched between high and low at the given
+frequency. A higher frequency will make the noise to appear 'softer'.
+When Bit 3 is set, the output will become more regular, and some
+frequencies will sound more like Tone than Noise.</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 7-4 - Shift Clock Frequency (s)
+Bit 3   - Counter Step/Width (0=15 bits, 1=7 bits)
+Bit 2-0 - Dividing Ratio of Frequencies (r)
+</code></pre></div><p>Frequency = 524288 Hz / r / 2^(s+1) ;For r=0 assume r=0.5 instead</p> <h4 id="ff23-nr44-channel-4-counter-consecutive-inital-r-w"><a href="#ff23-nr44-channel-4-counter-consecutive-inital-r-w" class="header-anchor">#</a> FF23 - NR44 - Channel 4 Counter/consecutive; Inital (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 7   - Initial (1=Restart Sound)     (Write Only)
+Bit 6   - Counter/consecutive selection (Read/Write)
+          (1=Stop output when length in NR41 expires)
+</code></pre></div><h2 id="sound-control-registers"><a href="#sound-control-registers" class="header-anchor">#</a> Sound Control Registers</h2> <h4 id="ff24-nr50-channel-control-on-off-volume-r-w"><a href="#ff24-nr50-channel-control-on-off-volume-r-w" class="header-anchor">#</a> FF24 - NR50 - Channel control / ON-OFF / Volume (R/W)</h4> <p>The volume bits specify the &quot;Master Volume&quot; for Left/Right sound
+output. SO2 goes to the left headphone, and SO1 goes to the right.</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 7   - Output Vin to SO2 terminal (1=Enable)
+Bit 6-4 - SO2 output level (volume)  (0-7)
+Bit 3   - Output Vin to SO1 terminal (1=Enable)
+Bit 2-0 - SO1 output level (volume)  (0-7)
+</code></pre></div><p>The Vin signal is an analog signal received from the game cartridge bus,
+allowing external hardware in the cartridge to supply a fifth sound
+channel, additionally to the Game Boy's internal four channels. No
+licensed games used this feature, and it was omitted from the Game Boy
+Advance.</p> <p>(Despite rumors, <em>Pocket Music</em> does not use Vin. It blocks use on the
+GBA for a different reason: the developer couldn't figure out how to
+silence buzzing associated with the wave channel's DAC.)</p> <h4 id="ff25-nr51-selection-of-sound-output-terminal-r-w"><a href="#ff25-nr51-selection-of-sound-output-terminal-r-w" class="header-anchor">#</a> FF25 - NR51 - Selection of Sound output terminal (R/W)</h4> <p>Each channel can be panned hard left, center, or hard right.</p> <div class="language- extra-class"><pre class="language-text"><code>Bit 7 - Output sound 4 to SO2 terminal
+Bit 6 - Output sound 3 to SO2 terminal
+Bit 5 - Output sound 2 to SO2 terminal
+Bit 4 - Output sound 1 to SO2 terminal
+Bit 3 - Output sound 4 to SO1 terminal
+Bit 2 - Output sound 3 to SO1 terminal
+Bit 1 - Output sound 2 to SO1 terminal
+Bit 0 - Output sound 1 to SO1 terminal
+</code></pre></div><h4 id="ff26-nr52-sound-on-off"><a href="#ff26-nr52-sound-on-off" class="header-anchor">#</a> FF26 - NR52 - Sound on/off</h4> <p>If your GB programs don't use sound then write 00h to this register to
+save 16% or more on GB power consumption. Disabeling the sound
+controller by clearing Bit 7 destroys the contents of all sound
+registers. Also, it is not possible to access any sound registers
+(execpt FF26) while the sound controller is disabled.</p> <div class="language- extra-class"><pre class="language-text"><code> Bit 7 - All sound on/off  (0: stop all sound circuits) (Read/Write)
+ Bit 3 - Sound 4 ON flag (Read Only)
+ Bit 2 - Sound 3 ON flag (Read Only)
+ Bit 1 - Sound 2 ON flag (Read Only)
+ Bit 0 - Sound 1 ON flag (Read Only)
+</code></pre></div><p>Bits 0-3 of this register are read only status bits, writing to these
+bits does NOT enable/disable sound. The flags get set when sound output
+is restarted by setting the Initial flag (Bit 7 in NR14-NR44), the flag
+remains set until the sound length has expired (if enabled). A volume
+envelopes which has decreased to zero volume will NOT cause the sound
+flag to go off.</p> <h2 id="pitfalls"><a href="#pitfalls" class="header-anchor">#</a> Pitfalls</h2> <ul><li>Enabling or disabling a DAC (resetting NR30 bit 7 or writing %0000
+0XXX to NRx2 for other channels), adding or removing it using NR51,
+or changing the volume in NR50, will cause an audio pop. (This
+causes a change in DC offset, which is smoothed out by a high-pass
+circuit over time, but still creates a pop)</li> <li>The final output goes through a high-pass filter, which is more
+aggressive on GBA than on GBC, which is more aggressive than on DMG.
+(What this means is that the output is &quot;pulled&quot; towards 0V with
+various degrees of &quot;aggressiveness&quot;)</li> <li>When first starting up a pulse channel, it will <em>always</em> output a
+(digital) zero.</li> <li>The pulse channels' &quot;duty step&quot; (at which position in the duty
+cycle they are) can't be reset. The exception to this is turning
+off the APU, which causes them to start over from 0 when turning it
+on.</li> <li>Restarting a pulse channel causes its &quot;duty step timer&quot; to reset,
+meaning that &quot;tickling&quot; a pulse channel regularly enough will
+cause its &quot;duty step&quot; to never advance.</li> <li>When restarting CH3, it resumes playing the last 4-bit sample it
+read from wave RAM, or 0 if no sample has been read since APU reset.
+(Sample latching is independent of output level control in NR32.)
+After the latched sample completes, it starts with the second sample
+in wave RAM (low 4 bits of $FF30). The first sample (high 4 bits of
+$FF30) is played last.</li> <li>CH3 output level control does not, in fact, alter the output level.
+It shifts the <strong>digital</strong> value CH3 is outputting (read below), not
+the analog value.</li> <li>On GBA, CH3 is inverted. This causes the channel to output a loud
+spike when disabled; it's a good idea to &quot;remove&quot; the channel
+using NR51 before refreshing wave RAM.</li></ul> <h2 id="apu-technical-explanation"><a href="#apu-technical-explanation" class="header-anchor">#</a> APU technical explanation</h2> <h4 id="game-boy-game-boy-color"><a href="#game-boy-game-boy-color" class="header-anchor">#</a> Game Boy, Game Boy Color</h4> <p>Each of the 4 channels work pretty identically. First, there's a
+&quot;generation&quot; circuit, which usually outputs either a 0 or another
+value (CH3 differs in that it can output multiple values, but
+regardless). That value is digital, and can range between 0 and 0xF.
+This is then fed to a
+<a href="https://en.wikipedia.org/wiki/Digital-to-analog_converter" target="_blank" rel="noopener noreferrer">DAC<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>, which
+maps this to an analog value; 7 maps to the lowest (negative) voltage, 0
+to the highest (positive) one. Finally, all channels are mixed through
+NR51, scaled through NR50, and sent to the output.</p> <p>Each DAC is controlled independently from the generation circuit. For
+CH3, the DAC is controlled by NR30 bit 7; for other channels, the DAC is
+turned on unless bits 3-7 of NRx2 are reset, and the envelope will be
+set to <code>[NRx2] &gt;&gt; 4</code>. (Note: the envelope sweep function changes the
+envelope, but not the value in NRx2! It won't disable the DAC, either.)
+The generation circuits are turned on by restarting them for the first
+time, and this is what sets the corresponding bit in NR52. Yes, it's
+possible to turn on a DAC but not the generation circuit. Finally,
+disabling a DAC also kills the generation circuit.</p> <p>Note that each DAC has a DC offset, so enabling, disabling, adding to or
+removing from NR51, will all cause an audio pop; changing the volume in
+NR50 will as well.</p> <p>Finally, all the output goes through a high-pass filter to remove the DC
+offsets from the DACs.</p> <h4 id="game-boy-advance"><a href="#game-boy-advance" class="header-anchor">#</a> Game Boy Advance</h4> <p>The APU was reworked pretty heavily for the GBA. Instead of mixing being
+done analogically, it's instead done digitally; then, sound is
+converted to an analog signal and an offset is added (see SOUNDBIAS in
+<a href="http://problemkaputt.de/gbatek.htm#gbasoundcontrolregisters" target="_blank" rel="noopener noreferrer">GBATEK<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>
+for more details.</p> <p>This means that the APU has no DACs, or if modelling the GBA as a GB,
+they're always on.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/pandocs/assets/js/app.3123f1fd.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.50f83f37.js" defer></script>
   </body>
 </html>
