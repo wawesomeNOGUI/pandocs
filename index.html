@@ -7,7 +7,7 @@
     <meta name="description" content="">
     
     
-    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.3123f1fd.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.50f83f37.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
+    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.5e6a29f6.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.9e66a8af.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
     <link rel="stylesheet" href="/pandocs/assets/css/0.styles.d2a81c02.css">
   </head>
   <body>
@@ -280,10 +280,10 @@ minus 1), a value of 0FFh indicates that the transfer has completed. It
 is also possible to terminate an active H-Blank transfer by writing zero
 to Bit 7 of FF55. In that case reading from FF55 will return how many
 $10 &quot;blocks&quot; remained (minus 1) in the lower 7 bits, but Bit 7 will
-be read as &quot;1&quot;. Stopping the transfer doesn't set HDMA1-4 to $FF.</p> <h4 id="precautions"><a href="#precautions" class="header-anchor">#</a> Precautions</h4> <p>H-Blank DMA should not be started (write to FF55) during a H-Blank
+be read as &quot;1&quot;. Stopping the transfer doesn't set HDMA1-4 to $FF.</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>Precautions:</p> <p>H-Blank DMA should not be started (write to FF55) during a H-Blank
 period (STAT mode 0).</p> <p>If the transfer's destination address overflows, the transfer stops
 prematurely. [Note : what's the state of the registers if this happens
-?]</p> <h4 id="confirming-if-the-dma-transfer-is-active"><a href="#confirming-if-the-dma-transfer-is-active" class="header-anchor">#</a> Confirming if the DMA Transfer is Active</h4> <p>Reading Bit 7 of FF55 can be used to confirm if the DMA transfer is
+?]</p></div> <h4 id="confirming-if-the-dma-transfer-is-active"><a href="#confirming-if-the-dma-transfer-is-active" class="header-anchor">#</a> Confirming if the DMA Transfer is Active</h4> <p>Reading Bit 7 of FF55 can be used to confirm if the DMA transfer is
 active (1=Not Active, 0=Active). This works under any circumstances -
 after completion of General Purpose, or H-Blank Transfer, and after
 manually terminating a H-Blank Transfer.</p> <h4 id="transfer-timings"><a href="#transfer-timings" class="header-anchor">#</a> Transfer Timings</h4> <p>In both Normal Speed and Double Speed Mode it takes about 8 μs to
@@ -602,6 +602,6 @@ converted to an analog signal and an offset is added (see SOUNDBIAS in
 <a href="http://problemkaputt.de/gbatek.htm#gbasoundcontrolregisters" target="_blank" rel="noopener noreferrer">GBATEK<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>
 for more details.</p> <p>This means that the APU has no DACs, or if modelling the GBA as a GB,
 they're always on.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/pandocs/assets/js/app.3123f1fd.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.50f83f37.js" defer></script>
+    <script src="/pandocs/assets/js/app.5e6a29f6.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.9e66a8af.js" defer></script>
   </body>
 </html>
