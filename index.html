@@ -7,7 +7,7 @@
     <meta name="description" content="">
     
     
-    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.a0cb9afb.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.c76138b2.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
+    <link rel="preload" href="/pandocs/assets/css/0.styles.d2a81c02.css" as="style"><link rel="preload" href="/pandocs/assets/js/app.d8437745.js" as="script"><link rel="preload" href="/pandocs/assets/js/3.996332f8.js" as="script"><link rel="preload" href="/pandocs/assets/js/2.0dbba3d2.js" as="script"><link rel="preload" href="/pandocs/assets/js/6.2816c36d.js" as="script"><link rel="prefetch" href="/pandocs/assets/js/4.4bd7a494.js"><link rel="prefetch" href="/pandocs/assets/js/5.882fbb48.js"><link rel="prefetch" href="/pandocs/assets/js/7.8afda27a.js">
     <link rel="stylesheet" href="/pandocs/assets/css/0.styles.d2a81c02.css">
   </head>
   <body>
@@ -17,7 +17,7 @@
   Contribute
   <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="pan-docs"><a href="#pan-docs" class="header-anchor">#</a> Pan Docs</h1> <p>The single, most comprehensive technical reference to Game Boy available to the public.</p> <h3 id="table-of-contents"><a href="#table-of-contents" class="header-anchor">#</a> Table of Contents</h3> <ul><li>Overview
 <ul><li><a href="#about-the-pan-docs">About the Pan Docs</a></li> <li><a href="#specifications">Specifications</a></li> <li><a href="#memory-map">Memory Map</a></li></ul></li> <li>I/O Ports
-<ul><li><a href="#video-display">Video Display</a></li> <li><a href="#sound-controller">Sound Controller</a></li> <li><a href="#joypad-input">Joypad Input</a></li> <li>Serial Data Transfer (Link Cable)</li> <li>Timer and Dividr Registers</li> <li>Interrupts</li> <li>CGB Registers</li> <li>SGB Functions</li></ul></li> <li>CPU Specifications
+<ul><li><a href="#video-display">Video Display</a></li> <li><a href="#sound-controller">Sound Controller</a></li> <li><a href="#joypad-input">Joypad Input</a></li> <li><a href="#serial-data-transfer">Serial Data Transfer (Link Cable)</a></li> <li><a href="#timer-and-divider-registers">Timer and Divider Registers</a></li> <li><a href="#interrupts">Interrupts</a></li> <li>CGB Registers</li> <li>SGB Functions</li></ul></li> <li>CPU Specifications
 <ul><li>Registers and Flags</li> <li>Instruction Set</li> <li>Comparision with Z80</li></ul></li> <li>Cartridges
 <ul><li>Cartridge header</li> <li>MBC1</li> <li>MBC2</li> <li>MBC3</li> <li>MBC5</li> <li>MBC6</li> <li>MBC7</li> <li>HuC1</li></ul></li> <li>Accessories
 <ul><li>Gameboy Printer</li> <li>Gameboy Camera</li> <li>Gamegenie/Shark Cheats</li></ul></li> <li>Other
@@ -659,7 +659,158 @@ button key, and pressing the corresponding direction key would thus
 cause no difference. The only meaningful purpose of the keystroke
 interrupt would be to terminate STOP (low power) standby state. GBA SP,
 because of the different buttons used, seems to not be affected by
-switch bounce.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/pandocs/assets/js/app.a0cb9afb.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.c76138b2.js" defer></script>
+switch bounce.</p> <h1 id="serial-data-transfer"><a href="#serial-data-transfer" class="header-anchor">#</a> Serial Data Transfer</h1> <p>Communication between two Gameboys happens one byte at a time. One
+Gameboy acts as the master, uses its internal clock, and thus controls
+when the exchange happens. The other one uses an external clock (i.e.,
+the one inside the other Gameboy) and has no control over when the
+transfer happens. If it hasn't gotten around to loading up the next
+data byte at the time the transfer begins, the last one will go out
+again. Alternately, if it's ready to send the next byte but the last
+one hasn't gone out yet, it has no choice but to wait.</p> <h4 id="ff01-sb-serial-transfer-data-r-w"><a href="#ff01-sb-serial-transfer-data-r-w" class="header-anchor">#</a> FF01 - SB - Serial transfer data (R/W)</h4> <p>Before a transfer, it holds the next byte that will go out.</p> <p>During a transfer, it has a blend of the outgoing and incoming bytes.
+Each cycle, the leftmost bit is shifted out (and over the wire) and the
+incoming bit is shifted in from the other side:</p> <div class="language- extra-class"><pre class="language-text"><code>o7 o6 o5 o4 o3 o2 o1 o0
+o6 o5 o4 o3 o2 o1 o0 i7
+o5 o4 o3 o2 o1 o0 i7 i6
+o4 o3 o2 o1 o0 i7 i6 i5
+o3 o2 o1 o0 i7 i6 i5 i4
+o2 o1 o0 i7 i6 i5 i4 i3
+o1 o0 i7 i6 i5 i4 i3 i2
+o0 i7 i6 i5 i4 i3 i2 i1
+i7 i6 i5 i4 i3 i2 i1 i0
+</code></pre></div><h4 id="ff02-sc-serial-transfer-control-r-w"><a href="#ff02-sc-serial-transfer-control-r-w" class="header-anchor">#</a> FF02 - SC - Serial Transfer Control (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 7 - Transfer Start Flag (0=No transfer is in progress or requested, 1=Transfer in progress, or requested)
+Bit 1 - Clock Speed (0=Normal, 1=Fast) ** CGB Mode Only **
+Bit 0 - Shift Clock (0=External Clock, 1=Internal Clock)
+</code></pre></div><p>The gameboy acting as master will load up a data byte in SB and then set
+SC to 0x81 (Transfer requested, use internal clock). It will be notified
+that the transfer is complete in two ways: SC's Bit 7 will be cleared
+(i.e., SC will be set up 0x01), and also the Serial Interrupt handler
+will be called (i.e., the CPU will jump to 0x0058).</p> <p>The other gameboy will load up a data byte and can optionally set SC's
+Bit 7 (i.e., SC=0x80). Regardless of whether or not it has done this, if
+and when the master gameboy wants to conduct a transfer, it will happen
+(pulling whatever happens to be in SB at that time). The passive gameboy
+will have its serial interrupt handler called at the end of the
+transfer, and if it bothered to set SC's Bit 7, it will be cleared.</p> <h4 id="internal-clock"><a href="#internal-clock" class="header-anchor">#</a> Internal Clock</h4> <p>In Non-CGB Mode the gameboy supplies an internal clock of 8192Hz only
+(allowing to transfer about 1 KByte per second). In CGB Mode four
+internal clock rates are available, depending on Bit 1 of the SC
+register, and on whether the CGB Double Speed Mode is used:</p> <div class="language- extra-class"><pre class="language-text"><code>   8192Hz -  1KB/s - Bit 1 cleared, Normal
+  16384Hz -  2KB/s - Bit 1 cleared, Double Speed Mode
+ 262144Hz - 32KB/s - Bit 1 set,     Normal
+ 524288Hz - 64KB/s - Bit 1 set,     Double Speed Mode
+</code></pre></div><h4 id="external-clock"><a href="#external-clock" class="header-anchor">#</a> External Clock</h4> <p>The external clock is typically supplied by another gameboy, but might
+be supplied by another computer (for example if connected to a PCs
+parallel port), in that case the external clock may have any speed. Even
+the old/monochrome gameboy is reported to recognizes external clocks of
+up to 500KHz. And there is no limitation into the other direction - even
+when suppling an external clock speed of &quot;1 bit per month&quot;, then the
+gameboy will still eagerly wait for the next bit(s) to be transferred.
+It isn't required that the clock pulses are sent at an regular interval
+either.</p> <h4 id="timeouts"><a href="#timeouts" class="header-anchor">#</a> Timeouts</h4> <p>When using external clock then the transfer will not complete until the
+last bit is received. In case that the second gameboy isn't supplying a
+clock signal, if it gets turned off, or if there is no second gameboy
+connected at all) then transfer will never complete. For this reason the
+transfer procedure should use a timeout counter, and abort the
+communication if no response has been received during the timeout
+interval.</p> <h4 id="delays-and-synchronization"><a href="#delays-and-synchronization" class="header-anchor">#</a> Delays and Synchronization</h4> <p>The gameboy that is using internal clock should always execute a small
+delay between each transfer, in order to ensure that the opponent
+gameboy has enough time to prepare itself for the next transfer, ie. the
+gameboy with external clock must have set its transfer start bit before
+the gameboy with internal clock starts the transfer. Alternately, the
+two gameboys could switch between internal and external clock for each
+transferred byte to ensure synchronization.</p> <p>Transfer is initiated by setting the master Gameboy setting its Transfer
+Start Flag, regardless of the value of this flag on the other device.
+This bit is automatically set to 0 (on both) at the end of Transfer.
+Reading this bit can be used to determine if the transfer is still
+active.</p> <h4 id="int-58-serial-interrupt"><a href="#int-58-serial-interrupt" class="header-anchor">#</a> INT 58 - Serial Interrupt</h4> <p>When the transfer has completed (ie. after sending/receiving 8 bits, if
+any) then an interrupt is requested by setting Bit 3 of the IF Register
+(FF0F). When that interrupt is enabled, then the Serial Interrupt vector
+at 0058 is called.</p> <p><strong>XXXXXX...</strong></p> <p>Transmitting and receiving serial data is done simultaneously. The
+received data is automatically stored in SB.</p> <p>The serial I/O port on the Gameboy is a very simple setup and is crude
+compared to standard RS-232 (IBM-PC) or RS-485 (Macintosh) serial ports.
+There are no start or stop bits.</p> <p>During a transfer, a byte is shifted in at the same time that a byte is
+shifted out. The rate of the shift is determined by whether the clock
+source is internal or external. The most significant bit is shifted in
+and out first.</p> <p>When the internal clock is selected, it drives the clock pin on the game
+link port and it stays high when not used. During a transfer it will go
+low eight times to clock in/out each bit.</p> <p>The state of the last bit shifted out determines the state of the output
+line until another transfer takes place.</p> <p>If a serial transfer with internal clock is performed and no external
+GameBoy is present, a value of $FF will be received in the transfer.</p> <p>The following code initiates the process of shifting $75 out the serial
+port and a byte to be shifted into $FF01:</p> <div class="language- extra-class"><pre class="language-text"><code>   ld   a,$75
+   ld  ($FF01),a
+   ld   a,$81
+   ld  ($FF02),a
+</code></pre></div><p>The Game Boy does not support wake-on-LAN. Completion of an externally
+clocked serial transfer does not exit STOP mode.</p> <h1 id="timer-and-divider-registers"><a href="#timer-and-divider-registers" class="header-anchor">#</a> Timer and Divider Registers</h1> <h4 id="ff04-div-divider-register-r-w"><a href="#ff04-div-divider-register-r-w" class="header-anchor">#</a> FF04 - DIV - Divider Register (R/W)</h4> <p>This register is incremented at rate of 16384Hz (~16779Hz on SGB).
+Writing any value to this register resets it to 00h.</p> <p>Note: The divider is affected by CGB double speed mode, and will
+increment at 32768Hz in double speed.</p> <h4 id="ff05-tima-timer-counter-r-w"><a href="#ff05-tima-timer-counter-r-w" class="header-anchor">#</a> FF05 - TIMA - Timer counter (R/W)</h4> <p>This timer is incremented by a clock frequency specified by the TAC
+register ($FF07). When the value overflows (gets bigger than FFh) then
+it will be reset to the value specified in TMA (FF06), and an interrupt
+will be requested, as described below.</p> <h4 id="ff06-tma-timer-modulo-r-w"><a href="#ff06-tma-timer-modulo-r-w" class="header-anchor">#</a> FF06 - TMA - Timer Modulo (R/W)</h4> <p>When the TIMA overflows, this data will be loaded.</p> <h4 id="ff07-tac-timer-control-r-w"><a href="#ff07-tac-timer-control-r-w" class="header-anchor">#</a> FF07 - TAC - Timer Control (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit  2   - Timer Enable
+Bits 1-0 - Input Clock Select
+           00: CPU Clock / 1024 (DMG, CGB:   4096 Hz, SGB:   ~4194 Hz)
+           01: CPU Clock / 16   (DMG, CGB: 262144 Hz, SGB: ~268400 Hz)
+           10: CPU Clock / 64   (DMG, CGB:  65536 Hz, SGB:  ~67110 Hz)
+           11: CPU Clock / 256  (DMG, CGB:  16384 Hz, SGB:  ~16780 Hz)
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">NOTE</p> <p>The &quot;Timer Enable&quot; bit only affects the timer, the divider is <strong>always</strong> counting</p></div> <h4 id="int-50-timer-interrupt"><a href="#int-50-timer-interrupt" class="header-anchor">#</a> INT 50 - Timer Interrupt</h4> <p>Each time when the timer overflows (ie. when TIMA gets bigger than FFh),
+then an interrupt is requested by setting Bit 2 in the IF Register
+(FF0F). When that interrupt is enabled, then the CPU will execute it by
+calling the timer interrupt vector at 0050h.</p> <h4 id="timer-obscure-behaviour"><a href="#timer-obscure-behaviour" class="header-anchor">#</a> Timer Obscure Behaviour</h4> <p>Read this page for a more detailed description of what the registers do:
+<a href="Timer_Obscure_Behaviour" title="wikilink">Timer Obscure Behaviour</a></p> <div class="custom-block tip"><p class="custom-block-title">NOTE</p> <p>The above described Timer is the built-in timer in the gameboy. It has
+nothing to do with the MBC3s battery buffered Real Time Clock - that's
+a completely different thing, described in the chapter about Memory
+Banking Controllers.</p></div> <h1 id="interrupts"><a href="#interrupts" class="header-anchor">#</a> Interrupts</h1> <h4 id="ime-interrupt-master-enable-flag-write-only"><a href="#ime-interrupt-master-enable-flag-write-only" class="header-anchor">#</a> IME - Interrupt Master Enable Flag (Write Only)</h4> <div class="language- extra-class"><pre class="language-text"><code>0 - Disable all Interrupts
+1 - Enable all Interrupts that are enabled in IE Register (FFFF)
+</code></pre></div><p>The IME flag is used to disable all interrupts, overriding any enabled
+bits in the IE Register. It isn't possible to access the IME flag by
+using a I/O address, instead IME is accessed directly from the CPU, by
+the following opcodes/operations:</p> <div class="language- extra-class"><pre class="language-text"><code>EI     ;Enable Interrupts  (ie. IME=1)
+DI     ;Disable Interrupts (ie. IME=0)
+RETI   ;Enable Ints &amp; Return (same as the opcode combination EI, RET)
+&lt;INT&gt;  ;Disable Ints &amp; Call to Interrupt Vector
+</code></pre></div><p>Whereas &lt;INT&gt; means the operation which is automatically executed by the
+CPU when it executes an interrupt.</p> <p>The effect of EI is delayed by one instruction. This means that EI
+followed immediately by DI does not allow interrupts between the EI and
+the DI.</p> <h4 id="ffff-ie-interrupt-enable-r-w"><a href="#ffff-ie-interrupt-enable-r-w" class="header-anchor">#</a> FFFF - IE - Interrupt Enable (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 0: V-Blank  Interrupt Enable  (INT 40h)  (1=Enable)
+Bit 1: LCD STAT Interrupt Enable  (INT 48h)  (1=Enable)
+Bit 2: Timer    Interrupt Enable  (INT 50h)  (1=Enable)
+Bit 3: Serial   Interrupt Enable  (INT 58h)  (1=Enable)
+Bit 4: Joypad   Interrupt Enable  (INT 60h)  (1=Enable)
+</code></pre></div><h4 id="ff0f-if-interrupt-flag-r-w"><a href="#ff0f-if-interrupt-flag-r-w" class="header-anchor">#</a> FF0F - IF - Interrupt Flag (R/W)</h4> <div class="language- extra-class"><pre class="language-text"><code>Bit 0: V-Blank  Interrupt Request (INT 40h)  (1=Request)
+Bit 1: LCD STAT Interrupt Request (INT 48h)  (1=Request)
+Bit 2: Timer    Interrupt Request (INT 50h)  (1=Request)
+Bit 3: Serial   Interrupt Request (INT 58h)  (1=Request)
+Bit 4: Joypad   Interrupt Request (INT 60h)  (1=Request)
+</code></pre></div><p>When an interrupt signal changes from low to high, then the
+corresponding bit in the IF register becomes set. For example, Bit 0
+becomes set when the LCD controller enters into the V-Blank period.</p> <h4 id="interrupt-requests"><a href="#interrupt-requests" class="header-anchor">#</a> Interrupt Requests</h4> <p>Any set bits in the IF register are only <strong>requesting</strong> an interrupt to be
+executed. The actual <strong>execution</strong> happens only if both the IME flag, and
+the corresponding bit in the IE register are set, otherwise the
+interrupt 'waits' until both IME and IE allow its execution.</p> <h4 id="interrupt-execution"><a href="#interrupt-execution" class="header-anchor">#</a> Interrupt Execution</h4> <p>When an interrupt gets executed, the corresponding bit in the IF
+register becomes automatically reset by the CPU, and the IME flag
+becomes cleared (disabeling any further interrupts until the program
+re-enables the interrupts, typically by using the RETI instruction), and
+the corresponding Interrupt Vector (that are the addresses in range
+0040h-0060h, as shown in IE and IF register decriptions above) becomes
+called.</p> <h4 id="manually-requesting-discarding-interrupts"><a href="#manually-requesting-discarding-interrupts" class="header-anchor">#</a> Manually Requesting/Discarding Interrupts</h4> <p>As the CPU automatically sets and cleares the bits in the IF register it
+is usually not required to write to the IF register. However, the user
+may still do that in order to manually request (or discard) interrupts.
+As for real interrupts, a manually requested interrupt isn't executed
+unless/until IME and IE allow its execution.</p> <h4 id="interrupt-priorities"><a href="#interrupt-priorities" class="header-anchor">#</a> Interrupt Priorities</h4> <p>In the following three situations it might happen that more than 1 bit in the IF register are set, requesting more than one interrupt at once:</p> <ol><li>More than one interrupt signal changed from Low to High at the same time.</li> <li>Several interrupts have been requested during a time in which IME/IE didn't allow these interrupts to be executed directly.</li> <li>The user has written a value with several &quot;1&quot; bits (for example 1Fh) to the IF register.</li></ol> <p>Provided that IME and IE allow the execution of more than one of the
+requested interrupts, then the interrupt with the highest priority
+becomes executed first. The priorities are ordered as the bits in the IE
+and IF registers, Bit 0 (V-Blank) having the highest priority, and Bit 4
+(Joypad) having the lowest priority.</p> <h4 id="nested-interrupts"><a href="#nested-interrupts" class="header-anchor">#</a> Nested Interrupts</h4> <p>The CPU automatically disables all other interrupts by setting IME=0
+when it executes an interrupt. Usually IME remains zero until the
+interrupt procedure returns (and sets IME=1 by the RETI instruction).
+However, if you want any other interrupts of lower or higher (or same)
+priority to be allowed to be executed from inside of the interrupt
+procedure, then you can place an EI instruction into the interrupt
+procedure.</p> <h4 id="interrupt-service-routine"><a href="#interrupt-service-routine" class="header-anchor">#</a> Interrupt Service Routine</h4> <p>According to Z80 datasheets, the following occurs when control is being
+transferred to an interrupt handler:</p> <ol><li>Two wait states are executed (2 machine cycles pass while nothing
+occurs, presumably the CPU is executing NOPs during this time).</li> <li>The current PC is pushed onto the stack, this process consumes 2 more
+machine cycles.</li> <li>The high byte of the PC is set to 0, the low byte is set to the
+address of the handler ($40,$48,$50,$58,$60). This consumes one
+last machine cycle.</li></ol> <p>The entire ISR <strong>should</strong> consume a total of 5 machine cycles. This has
+yet to be tested, but is what the Z80 datasheet implies.</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/pandocs/assets/js/app.d8437745.js" defer></script><script src="/pandocs/assets/js/3.996332f8.js" defer></script><script src="/pandocs/assets/js/2.0dbba3d2.js" defer></script><script src="/pandocs/assets/js/6.2816c36d.js" defer></script>
   </body>
 </html>
